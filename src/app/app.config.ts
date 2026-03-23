@@ -1,10 +1,11 @@
-import { ApplicationConfig, ErrorHandler, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, ErrorHandler, provideZoneChangeDetection, inject, APP_INITIALIZER } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { routes } from './app.routes';
 import { AppErrorHandler } from './core/app-error-handler';
 import { httpErrorInterceptor } from './core/http-error.interceptor';
+import { FirebaseService } from './core/firebase.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,5 +14,14 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([httpErrorInterceptor])),
     provideAnimations(),
     { provide: ErrorHandler, useClass: AppErrorHandler },
+    // Eagerly initialize Firebase on app start
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () => {
+        const firebase = inject(FirebaseService);
+        return () => firebase; // service constructor handles init
+      },
+      multi: true,
+    },
   ]
 };
