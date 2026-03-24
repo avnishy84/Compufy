@@ -8,19 +8,18 @@ import { scrollReveal } from '../../shared/animations/animations';
   animations: [scrollReveal],
   template: `
     <section
-      class="relative flex min-h-screen items-center justify-center overflow-hidden bg-surface px-6"
+      class="relative flex min-h-[100dvh] items-center justify-center overflow-hidden bg-surface px-4 py-12 sm:px-6"
       [@scrollReveal]
     >
-      <!-- Background gradient blobs (same as hero) -->
+      <!-- Background gradient blobs -->
       <div class="pointer-events-none absolute inset-0">
-        <div class="absolute left-1/4 top-1/4 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-primary/10 blur-3xl"></div>
-        <div class="absolute right-1/4 bottom-1/4 h-96 w-96 translate-x-1/2 translate-y-1/2 rounded-full bg-brand-secondary/10 blur-3xl"></div>
-        <div class="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-accent/5 blur-3xl"></div>
+        <div class="absolute left-1/4 top-1/4 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-primary/10 blur-3xl sm:h-96 sm:w-96"></div>
+        <div class="absolute right-1/4 bottom-1/4 h-64 w-64 translate-x-1/2 translate-y-1/2 rounded-full bg-brand-secondary/10 blur-3xl sm:h-96 sm:w-96"></div>
       </div>
 
-      <div class="relative z-10 flex flex-col items-center gap-10 text-center">
+      <div class="relative z-10 flex w-full max-w-lg flex-col items-center gap-6 text-center sm:gap-10">
 
-        <!-- Rotating cube (same as hero) -->
+        <!-- Rotating cube -->
         <div class="tech-cube" aria-hidden="true">
           <div class="face front"></div>
           <div class="face back"></div>
@@ -30,43 +29,43 @@ import { scrollReveal } from '../../shared/animations/animations';
           <div class="face bottom"></div>
         </div>
 
-        <!-- Brand name -->
-        <div>
-          <p class="mb-2 text-sm font-semibold uppercase tracking-widest text-brand-accent">
+        <!-- Brand + headline -->
+        <div class="space-y-3">
+          <p class="text-xs font-semibold uppercase tracking-widest text-brand-accent sm:text-sm">
             Compufy Technology
           </p>
-          <h1 class="text-5xl font-bold leading-tight text-white sm:text-6xl lg:text-7xl">
+          <h1 class="text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
             Something
             <span class="bg-gradient-to-r from-brand-primary to-brand-accent bg-clip-text text-transparent">
               Exciting
             </span>
             <br />is Coming
           </h1>
-          <p class="mx-auto mt-4 max-w-xl text-lg text-slate-400">
+          <p class="mx-auto max-w-sm text-base text-slate-400 sm:text-lg">
             We're crafting the next generation of smart technology solutions.
             Stay tuned — it'll be worth the wait.
           </p>
         </div>
 
         <!-- Countdown -->
-        <div class="flex gap-4 sm:gap-6">
+        <div class="grid w-full grid-cols-4 gap-2 sm:gap-4">
           @for (unit of countdown(); track unit.label) {
-            <div class="flex flex-col items-center rounded-xl border border-white/10 bg-surface-glass px-5 py-4 backdrop-blur-glass">
-              <span class="text-3xl font-bold text-white sm:text-4xl">{{ unit.value }}</span>
-              <span class="mt-1 text-xs font-medium uppercase tracking-widest text-slate-400">{{ unit.label }}</span>
+            <div class="flex flex-col items-center rounded-xl border border-white/10 bg-surface-glass py-3 backdrop-blur-glass sm:py-4">
+              <span class="text-2xl font-bold tabular-nums text-white sm:text-3xl">{{ unit.value }}</span>
+              <span class="mt-1 text-[10px] font-medium uppercase tracking-widest text-slate-400 sm:text-xs">{{ unit.label }}</span>
             </div>
           }
         </div>
 
         <!-- Divider -->
-        <div class="h-px w-48 bg-gradient-to-r from-transparent via-brand-primary/50 to-transparent"></div>
+        <div class="h-px w-32 bg-gradient-to-r from-transparent via-brand-primary/50 to-transparent sm:w-48"></div>
 
-        <!-- Notify CTA -->
-        <p class="text-sm text-slate-500">
+        <!-- Contact -->
+        <p class="text-xs text-slate-500 sm:text-sm">
           Questions? Reach us at
           <a
             href="mailto:compufykanpur&#64;gmail.com"
-            class="text-brand-accent underline-offset-4 hover:underline"
+            class="block text-brand-accent underline-offset-4 hover:underline sm:inline"
           >compufykanpur&#64;gmail.com</a>
         </p>
       </div>
