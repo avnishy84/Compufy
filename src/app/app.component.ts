@@ -11,7 +11,7 @@ import { ErrorHandlerService } from './core/error-handler.service';
   template: `
     <nav class="fixed top-0 left-0 right-0 z-50 bg-surface-glass backdrop-blur-glass border-b border-white/10">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <a routerLink="/" class="text-white font-bold text-lg">Compufy</a>
+        <a routerLink="/" class="text-white font-bold text-lg">Compufy Technology</a>
         <div class="hidden sm:flex items-center gap-6">
           <a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}"
              class="text-slate-300 hover:text-white transition-colors text-sm font-medium">Home</a>
