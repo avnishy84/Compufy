@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "public",
+    "public": "dist/compufy-technology-website/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
