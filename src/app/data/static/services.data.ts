@@ -21,9 +21,23 @@ export const SERVICES_DATA: ServiceCategory[] = [
       },
       {
         id: 'web-3',
-        title: 'Progressive Web Apps',
-        description: 'Offline-capable, installable web apps that combine the reach of the web with the feel of a native application.',
+        title: 'Web App Development',
+        description: 'Fast, offline-capable web apps with rich interactivity — installable on any device without an app store.',
+        iconName: 'monitor',
+        category: 'web-development',
+      },
+      {
+        id: 'web-3b',
+        title: 'Mobile App — Android & iOS',
+        description: 'Cross-platform native mobile apps for Android and iOS, built for performance, smooth UX, and app store distribution.',
         iconName: 'smartphone',
+        category: 'web-development',
+      },
+      {
+        id: 'web-3c',
+        title: 'Windows Desktop App',
+        description: 'Modern Windows desktop applications with native OS integration, offline support, and enterprise-grade reliability.',
+        iconName: 'app-window',
         category: 'web-development',
       },
       {
@@ -71,7 +85,7 @@ export const SERVICES_DATA: ServiceCategory[] = [
   },
   {
     id: 'pitc',
-    label: 'P.I.T.C.',
+    label: 'P.I.T.C. — Product IT Consulting',
     services: [
       {
         id: 'pitc-1',

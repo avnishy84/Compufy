@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Insights | Compufy Technology</title>
+  <meta name="description" content="Explore Compufy Technology research, insights, and real client impact to help you embrace key forces of change.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { primary: '#6366f1', secondary: '#8b5cf6', accent: '#06b6d4' },
+            surface: { DEFAULT: '#0f172a', card: '#1e293b', glass: 'rgba(30,41,59,0.6)' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .skip-link { position:absolute; left:-9999px; top:auto; }
+    .skip-link:focus { position:static; left:auto; }
+    .badge-research  { background:#6366f1; }
+    .badge-news      { background:#06b6d4; }
+    .badge-case      { background:#8b5cf6; }
+    .badge-blog      { background:#10b981; }
+  </style>
+</head>
+<body class="bg-surface text-white font-sans antialiased">
+
+<!-- Skip Links -->
+<a href="#main" class="skip-link focus:block bg-brand-primary text-white px-4 py-2 rounded z-50">Skip to main content</a>
+<a href="#footer" class="skip-link focus:block bg-brand-primary text-white px-4 py-2 rounded z-50">Skip to footer</a>
+
+<!-- Navigation -->
+<header class="sticky top-0 z-40 border-b border-white/10 bg-surface/90 backdrop-blur-sm">
+  <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4" aria-label="Main navigation">
+    <a href="/" class="text-xl font-bold tracking-tight text-white">
+      Compufy <span class="bg-gradient-to-r from-brand-primary to-brand-accent bg-clip-text text-transparent">Technology</span>
+    </a>
+    <ul class="hidden items-center gap-8 md:flex" role="list">
+      <li><a href="#" class="border-b-2 border-brand-primary pb-1 text-sm font-semibold text-white" aria-current="page">What we do</a></li>
+      <li><a href="https://example.com/what-we-think" class="text-sm text-slate-400 transition hover:text-white">What we think</a></li>
+      <li><a href="#" class="text-sm text-slate-400 transition hover:text-white">Who we are</a></li>
+      <li><a href="#" class="text-sm text-slate-400 transition hover:text-white">Careers</a></li>
+      <li>
+        <a href="#" aria-label="Search" class="text-slate-400 transition hover:text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg>
+        </a>
+      </li>
+    </ul>
+    <div class="flex items-center gap-2 text-sm text-slate-400">
+      <span>🇮🇳</span>
+      <span>India</span>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-surface px-6 py-20">
+    <div class="pointer-events-none absolute inset-0">
+      <div class="absolute left-1/4 top-1/4 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-primary/10 blur-3xl"></div>
+      <div class="absolute right-1/4 bottom-1/4 h-96 w-96 translate-x-1/2 translate-y-1/2 rounded-full bg-brand-secondary/10 blur-3xl"></div>
+    </div>
+    <div class="relative mx-auto max-w-4xl text-center">
+      <p class="mb-3 text-sm font-semibold uppercase tracking-widest text-brand-accent">Insights</p>
+      <h1 class="mb-6 text-5xl font-bold leading-tight text-white sm:text-6xl">Stay ahead of change</h1>
+      <p class="mx-auto max-w-2xl text-lg leading-relaxed text-slate-400">
+        Explore our research, insights, and examples of real client impact, designed to help you embrace the key forces of change and get to value faster.
+      </p>
+    </div>
+  </section>
+
+  <!-- Filters -->
+  <section class="border-b border-white/10 bg-surface/80 px-6 py-4 backdrop-blur-sm" aria-label="Filters">
+    <div class="mx-auto flex max-w-7xl flex-wrap items-center gap-3">
+      <select aria-label="Filter by Topic" class="rounded-lg border border-white/10 bg-surface-card px-4 py-2 text-sm text-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-primary">
+        <option>Topic</option><option>AI & Technology</option><option>Sustainability</option><option>Strategy</option>
+      </select>
+      <select aria-label="Filter by Industry" class="rounded-lg border border-white/10 bg-surface-card px-4 py-2 text-sm text-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-primary">
+        <option>Industry</option><option>Healthcare</option><option>Aerospace</option><option>Retail</option>
+      </select>
+      <select aria-label="Filter by Content Type" class="rounded-lg border border-white/10 bg-surface-card px-4 py-2 text-sm text-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-primary">
+        <option>Content Type</option><option>Research Report</option><option>Case Study</option><option>Blog</option><option>News Article</option>
+      </select>
+      <div class="ml-auto">
+        <select aria-label="Sort order" class="rounded-lg border border-white/10 bg-surface-card px-4 py-2 text-sm text-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-primary">
+          <option>Sort by Editor's picks</option><option>Most Recent</option><option>Most Popular</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content Grid -->
+  <section class="px-6 py-16" aria-label="Insights articles">
+    <div class="mx-auto max-w-7xl grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+      <!-- Card 1 -->
+      <article class="group flex flex-col rounded-xl border border-white/10 bg-surface-card p-6 transition-all duration-200 hover:-translate-y-1 hover:border-brand-primary/40 hover:shadow-lg hover:shadow-brand-primary/10">
+        <span class="badge-research mb-4 inline-block self-start rounded-full px-3 py-1 text-xs font-semibold text-white">Research Report</span>
+        <h3 class="mb-3 text-lg font-bold leading-snug text-white">Sovereign AI: From managing risk to accelerating growth</h3>
+        <p class="mb-4 flex-1 text-sm leading-relaxed text-slate-400">Sovereign AI isn't just a control play—it's a game-changer for nations and enterprises ready to make the following four bold moves.</p>
+        <a href="https://www.accenture.com/in-en/insights/technology/sovereign-ai" target="_blank" rel="noopener" class="mt-auto text-sm font-semibold text-brand-accent hover:underline" aria-label="Expand: Sovereign AI article">Expand →</a>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="group flex flex-col rounded-xl border border-white/10 bg-surface-card p-6 transition-all duration-200 hover:-translate-y-1 hover:border-brand-primary/40 hover:shadow-lg hover:shadow-brand-primary/10">
+        <span class="badge-research mb-4 inline-block self-start rounded-full px-3 py-1 text-xs font-semibold text-white">Research Report</span>
+        <h3 class="mb-3 text-lg font-bold leading-snug text-white">Holiday shopping 2025</h3>
+        <p class="mb-4 flex-1 text-sm leading-relaxed text-slate-400">Holiday shoppers are using AI to build smarter shortlists and make more confident purchase decisions this season.</p>
+        <a href="https://www.accenture.com/in-en/insights/consulting/consumer-holiday-research" target="_blank" rel="noopener" class="mt-auto text-sm font-semibold text-brand-accent hover:underline" aria-label="Expand: Holiday shopping 2025">Expand →</a>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="group flex flex-col rounded-xl border border-white/10 bg-surface-card p-6 transition-all duration-200 hover:-translate-y-1 hover:border-brand-primary/40 hover:shadow-lg hover:shadow-brand-primary/10">
+        <span class="badge-research mb-4 inline-block self-start rounded-full px-3 py-1 text-xs font-semibold text-white">Research Report</span>
+        <h3 class="mb-3 text-lg font-bold leading-snug text-white">Unlocking the Next Era of Sustainability Leadership</h3>
+        <p class="mb-4 flex-1 text-sm leading-relaxed text-slate-400">Insights from the 2025 UN Global Compact-Accenture CEO Study on sustainability leadership and long-term value creation.</p>
+        <a href="https://www.accenture.com/in-en/insights/sustainability/unlocking-next-era-sustainability-leadership" target="_blank" rel="noopener" class="mt-auto text-sm font-semibold text-brand-accent hover:underline" aria-label="Expand: Sustainability Leadership">Expand →</a>
+      </article>
+
+      <!-- Card 4 -->
+      <article class="group flex flex-col rounded-xl border border-white/10 bg-surface-card p-6 transition-all duration-200 hover:-translate-y-1 hover:border-brand-primary/40 hover:shadow-lg hover:shadow-brand-primary/10">
+        <span class="badge-news mb-4 inline-block self-start rounded-full px-3 py-1 text-xs font-semibold text-white">News Article</span>
+        <h3 class="mb-3 text-lg font-bold leading-snug text-white">Five traits of tech-driven CEOs</h3>
+        <p class="mb-4 flex-1 text-sm leading-relaxed text-slate-400">What sets apart executives who successfully leverage technology—and how you stack up against the defining traits of tomorrow's leaders.</p>
+        <a href="https://www.accenture.com/in-en/insights/strategy/five-traits-tech-driven-ceos" target="_blank" rel="noopener" class="mt-auto text-sm font-semibold text-brand-accent hover:underline" aria-label="Expand: Five traits of tech-driven CEOs">Expand →</a>
+      </article>
+
+      <!-- Card 5 -->
+      <article class="group flex flex-col rounded-xl border border-white/10 bg-surface-card p-6 transition-all duration-200 hover:-translate-y-1 hover:border-brand-primary/40 hover:shadow-lg hover:shadow-brand-primary/10">
+        <span class="badge-research mb-4 inline-block self-start rounded-full px-3 py-1 text-xs font-semibold text-white">Research Report</span>
+        <h3 class="mb-3 text-lg font-bold leading-snug text-white">Resilience in flight: securing future growth amid volatility</h3>
+        <p class="mb-4 flex-1 text-sm leading-relaxed text-slate-400">The latest Accenture Commercial Aerospace Insight Report reveals how leading carriers achieved a 12% revenue increase in 2025 through operational resilience.</p>
+        <a href="https://www.accenture.com/in-en/insights/aerospace-defense/commercial-aerospace-insight-report" target="_blank" rel="noopener" class="mt-auto text-sm font-semibold text-brand-accent hover:underline" aria-label="Expand: Resilience in flight">Expand →</a>
+      </article>
+
+      <!-- Card 6 -->
+      <article class="group flex flex-col rounded-xl border border-white/10 bg-surface-card p-6 transition-all duration-200 hover:-translate-y-1 hover:border-brand-primary/40 hover:shadow-lg hover:shadow-brand-primary/10">
+        <span class="badge-case mb-4 inline-block self-start rounded-full px-3 py-1 text-xs font-semibold text-white">Case Study</span>
+        <h3 class="mb-3 text-lg font-bold leading-snug text-white">Bristol Myers Squibb accelerates drug development with generative AI</h3>
+        <p class="mb-4 flex-1 text-sm leading-relaxed text-slate-400">Integrating data and generative AI across the drug development pipeline to deliver life-saving treatments to more patients faster.</p>
+        <a href="https://www.accenture.com/in-en/case-studies/health/bristol-myers-squibb-accelerates-drug-development-genai" target="_blank" rel="noopener" class="mt-auto text-sm font-semibold text-brand-accent hover:underline" aria-label="Expand: Bristol Myers Squibb case study">Expand →</a>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- Content Grid Row 2 -->
+  <section class="px-6 pb-8" aria-label="More insights">
+    <div class="mx-auto max-w-7xl grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+      <!-- Card 7 -->
+      <article class="group flex flex-col rounded-xl border border-white/10 bg-surface-card p-6 transition-all duration-200 hover:-translate-y-1 hover:border-brand-primary/40 hover:shadow-lg hover:shadow-brand-primary/10">
+        <span class="badge-case mb-4 inline-block self-start rounded-full px-3 py-1 text-xs font-semibold text-white">Case Study</span>
+        <h3 class="mb-3 text-lg font-bold leading-snug text-white">Poste Italiane pivots from postal service to national platform</h3>
+        <p class="mb-4 flex-1 text-sm leading-relaxed text-slate-400">With AI and cloud, Poste Italiane transformed into a digital services powerhouse serving millions of citizens across Italy.</p>
+        <a href="https://www.accenture.com/in-en/case-studies/data-ai/poste-italianes-pivot-postal-service-platform-powerhouse" target="_blank" rel="noopener" class="mt-auto text-sm font-semibold text-brand-accent hover:underline" aria-label="Expand: Poste Italiane case study">Expand →</a>
+      </article>
+
+      <!-- Card 8 -->
+      <article class="group flex flex-col rounded-xl border border-white/10 bg-surface-card p-6 transition-all duration-200 hover:-translate-y-1 hover:border-brand-primary/40 hover:shadow-lg hover:shadow-brand-primary/10">
+        <span class="badge-blog mb-4 inline-block self-start rounded-full px-3 py-1 text-xs font-semibold text-white">Blog</span>
+        <h3 class="mb-3 text-lg font-bold leading-snug text-white">Beyond the hype: Why agentic AI is closer than you think</h3>
+        <p class="mb-4 flex-1 text-sm leading-relaxed text-slate-400">The evolution from simple prompting to autonomous agents is accelerating—and interoperability is the key to unlocking its full potential.</p>
+        <a href="https://www.accenture.com/in-en/blogs/data-ai/beyond-hype-why-agentic-ai-closer-than-you-think" target="_blank" rel="noopener" class="mt-auto text-sm font-semibold text-brand-accent hover:underline" aria-label="Expand: Agentic AI blog">Expand →</a>
+      </article>
+
+      <!-- Card 9 -->
+      <article class="group flex flex-col rounded-xl border border-white/10 bg-surface-card p-6 transition-all duration-200 hover:-translate-y-1 hover:border-brand-primary/40 hover:shadow-lg hover:shadow-brand-primary/10">
+        <span class="badge-research mb-4 inline-block self-start rounded-full px-3 py-1 text-xs font-semibold text-white">Research Report</span>
+        <h3 class="mb-3 text-lg font-bold leading-snug text-white">Technology Vision 2025</h3>
+        <p class="mb-4 flex-1 text-sm leading-relaxed text-slate-400">AI is transforming business at every layer. Discover the technology trends defining tomorrow, today.</p>
+        <a href="https://www.accenture.com/in-en/insights/technology/technology-trends-2025" target="_blank" rel="noopener" class="mt-auto text-sm font-semibold text-brand-accent hover:underline" aria-label="Expand: Technology Vision 2025">Expand →</a>
+      </article>
+
+      <!-- Card 10 -->
+      <article class="group flex flex-col rounded-xl border border-white/10 bg-surface-card p-6 transition-all duration-200 hover:-translate-y-1 hover:border-brand-primary/40 hover:shadow-lg hover:shadow-brand-primary/10">
+        <span class="badge-research mb-4 inline-block self-start rounded-full px-3 py-1 text-xs font-semibold text-white">Research Report</span>
+        <h3 class="mb-3 text-lg font-bold leading-snug text-white">Accenture Life Trends 2025</h3>
+        <p class="mb-4 flex-1 text-sm leading-relaxed text-slate-400">Five trends reshaping how people live, work, and connect—and what businesses must do to reach them.</p>
+        <a href="https://www.accenture.com/in-en/insights/song/accenture-life-trends" target="_blank" rel="noopener" class="mt-auto text-sm font-semibold text-brand-accent hover:underline" aria-label="Expand: Life Trends 2025">Expand →</a>
+      </article>
+
+      <!-- Card 11 -->
+      <article class="group flex flex-col rounded-xl border border-white/10 bg-surface-card p-6 transition-all duration-200 hover:-translate-y-1 hover:border-brand-primary/40 hover:shadow-lg hover:shadow-brand-primary/10">
+        <span class="badge-research mb-4 inline-block self-start rounded-full px-3 py-1 text-xs font-semibold text-white">Research Report</span>
+        <h3 class="mb-3 text-lg font-bold leading-snug text-white">Pulse of Change: What's top of mind for today's leaders</h3>
+        <p class="mb-4 flex-1 text-sm leading-relaxed text-slate-400">After two years of disruption, leaders are focused on how to scale AI investments and extract real, measurable value.</p>
+        <a href="https://www.accenture.com/in-en/insights/pulse-of-change" target="_blank" rel="noopener" class="mt-auto text-sm font-semibold text-brand-accent hover:underline" aria-label="Expand: Pulse of Change">Expand →</a>
+      </article>
+      
+      <!-- Card 12 -->
+      <article class="group flex flex-col rounded-xl border border-white/10 bg-surface-card p-6 transition-all duration-200 hover:-translate-y-1 hover:border-brand-primary/40 hover:shadow-lg hover:shadow-brand-primary/10">
+        <span class="badge-research mb-4 inline-block self-start rounded-full px-3 py-1 text-xs font-semibold text-white">Research Report</span>
+        <h3 class="mb-3 text-lg font-bold leading-snug text-white">Actioning the Next Generation of Risk Management</h3>
+        <p class="mb-4 flex-1 text-sm leading-relaxed text-slate-400">To ensure safety and resilience at scale, organizations must shift from reactive risk management to a proactive, strategic model.</p>
+        <a href="https://www.accenture.com/in-en/insights/consulting/reinventing-risk-management" target="_blank" rel="noopener" class="mt-auto text-sm font-semibold text-brand-accent hover:underline" aria-label="Expand: Risk Management">Expand →</a>
+      </article>
+
+    </div>
+
+    <!-- Load More -->
+    <div class="mx-auto mt-12 max-w-7xl text-center">
+      <button
+        onclick="alert('Loading more insights...')"
+        class="rounded-xl border border-brand-primary/50 bg-brand-primary/10 px-8 py-3 text-sm font-semibold text-brand-primary transition hover:bg-brand-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-brand-primary"
+        aria-label="Load more insights"
+      >
+        Load more
+      </button>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer id="footer" class="border-t border-white/10 bg-surface px-6 py-16">
+  <div class="mx-auto max-w-4xl text-center">
+    <!-- Slogan -->
+    <p class="mb-8 text-3xl font-bold text-white sm:text-4xl">
+      Let there be
+      <span class="bg-gradient-to-r from-brand-primary to-brand-accent bg-clip-text text-transparent">change</span>
+    </p>
+
+    <!-- Divider -->
+    <div class="mx-auto mb-8 h-px w-32 bg-gradient-to-r from-transparent via-brand-primary/50 to-transparent"></div>
+
+    <!-- Footer Links -->
+    <nav aria-label="Footer navigation">
+      <ul class="flex flex-wrap justify-center gap-x-6 gap-y-3 text-xs text-slate-400">
+        <li><a href="#" class="hover:text-white transition">Preference Center</a></li>
+        <li><a href="#" class="hover:text-white transition">Careers</a></li>
+        <li><a href="#" class="hover:text-white transition">About Us</a></li>
+        <li><a href="#" class="hover:text-white transition">Contact Us</a></li>
+        <li><a href="#" class="hover:text-white transition">Locations</a></li>
+        <li><a href="#" class="hover:text-white transition">Sitemap</a></li>
+        <li><a href="#" class="hover:text-white transition">Privacy Statement</a></li>
+        <li><a href="#" class="hover:text-white transition">Terms &amp; Conditions</a></li>
+        <li><a href="#" class="hover:text-white transition">Cookie Policy/Settings</a></li>
+        <li><a href="#" class="hover:text-white transition">Accessibility Statement</a></li>
+      </ul>
+    </nav>
+
+    <!-- Copyright -->
+    <p class="mt-8 text-xs text-slate-500">
+      &copy; 2026 Compufy Technology. All Rights Reserved.
+    </p>
+    <p class="mt-2 text-xs text-slate-600">
+      <a href="https://www.accenture.com/in-en/insights-index" target="_blank" rel="noopener" class="hover:text-slate-400 transition">
+        accenture.com/in-en/insights-index
+      </a>
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

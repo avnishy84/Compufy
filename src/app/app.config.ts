@@ -11,6 +11,7 @@ import {
   Cloud, TrendingUp, Lightbulb, ArrowRight,
   Code2, LayoutDashboard, Smartphone, Globe,
   Search, BarChart, Settings, Shield, Users,
+  Monitor, AppWindow,
 } from 'lucide-angular';
 
 export const appConfig: ApplicationConfig = {
@@ -27,6 +28,7 @@ export const appConfig: ApplicationConfig = {
         Cloud, TrendingUp, Lightbulb, ArrowRight,
         Code2, LayoutDashboard, Smartphone, Globe,
         Search, BarChart, Settings, Shield, Users,
+        Monitor, AppWindow,
       }),
     },
     // Eagerly initialize Firebase on app start
