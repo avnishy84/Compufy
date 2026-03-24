@@ -100,7 +100,7 @@ import { scrollReveal } from '../../shared/animations/animations';
   `],
 })
 export class ComingSoonComponent implements OnInit, OnDestroy {
-  private readonly launchDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+  private readonly launchDate = new Date('2026-04-24T00:00:00');
   private intervalId: ReturnType<typeof setInterval> | null = null;
 
   readonly countdown = signal(this.getCountdown());
