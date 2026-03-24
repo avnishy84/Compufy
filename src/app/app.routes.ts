@@ -22,6 +22,11 @@ export const routes: Routes = [
       import('./features/contact/contact.component').then(m => m.ContactComponent),
   },
   {
+    path: 'who-we-are',
+    loadComponent: () =>
+      import('./features/who-we-are/who-we-are.component').then(m => m.WhoWeAreComponent),
+  },
+  {
     path: '**',
     redirectTo: '',
   },
