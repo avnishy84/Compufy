@@ -21,6 +21,8 @@ import { ErrorHandlerService } from './core/error-handler.service';
              class="text-slate-300 hover:text-white transition-colors text-sm font-medium">Who We Are</a>
           <a routerLink="/contact" routerLinkActive="active-link"
              class="text-slate-300 hover:text-white transition-colors text-sm font-medium">Contact</a>
+          <a routerLink="/careers" routerLinkActive="active-link"
+             class="text-slate-300 hover:text-white transition-colors text-sm font-medium">Careers</a>
         </div>
       </div>
     </nav>

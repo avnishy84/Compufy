@@ -2,8 +2,7 @@ import { Component, ChangeDetectionStrategy, signal, inject } from '@angular/cor
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ContactFormComponent } from './contact-form/contact-form.component';
 import { SuccessMessageComponent } from './success-message/success-message.component';
-import { HttpService } from '../../core/http.service';
-import { API_ENDPOINTS } from '../../data/constants/api.constants';
+import { EmailService } from '../../core/email.service';
 import { minLengthTrimmed } from './validators';
 import { scrollReveal } from '../../shared/animations/animations';
 
@@ -30,15 +29,22 @@ interface ContactFormControls {
         @if (submitted()) {
           <app-success-message />
         } @else {
-          <app-contact-form [form]="contactForm" (submitForm)="onSubmit()" />
+          @if (submitError()) {
+            <div class="mb-6 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400" role="alert">
+              {{ submitError() }}
+            </div>
+          }
+          <app-contact-form [form]="contactForm" [submitting]="submitting()" (submitForm)="onSubmit()" />
         }
       </div>
     </main>
   `,
 })
 export class ContactComponent {
-  private readonly httpService = inject(HttpService);
+  private readonly emailService = inject(EmailService);
   readonly submitted = signal(false);
+  readonly submitting = signal(false);
+  readonly submitError = signal<string | null>(null);
 
   readonly contactForm = new FormGroup<ContactFormControls>({
     fullName: new FormControl('', [minLengthTrimmed(2)]),
@@ -52,9 +58,25 @@ export class ContactComponent {
       this.contactForm.markAllAsTouched();
       return;
     }
-    this.httpService.post(API_ENDPOINTS.CONTACT_SUBMIT, this.contactForm.value).subscribe({
-      next: () => this.submitted.set(true),
-      error: () => { /* error handled by interceptor */ },
-    });
+    const { fullName, email, subject, message } = this.contactForm.value;
+    this.submitting.set(true);
+    this.submitError.set(null);
+    this.emailService
+      .sendContactEmail({
+        fullName: fullName ?? '',
+        email: email ?? '',
+        subject: subject ?? '',
+        message: message ?? '',
+      })
+      .then(() => {
+        this.submitted.set(true);
+        this.contactForm.reset();
+      })
+      .catch(() => {
+        this.submitError.set('Failed to send message. Please try again.');
+      })
+      .finally(() => {
+        this.submitting.set(false);
+      });
   }
 }

@@ -1,5 +1,11 @@
 export const environment = {
   production: false,
+  emailjs: {
+    publicKey: 'gIj6Ftc8C8QGNroUB',
+    serviceId: 'service_dz8v4qb',
+    contactTemplateId: 'template_s49d2gp',
+    careersTemplateId: 'template_86ksw6j',
+  },
   firebase: {
     apiKey: 'AIzaSyCEPQJsU1wq24-r21GnmZaBiD8taqb8e6o',
     authDomain: 'compufytech.firebaseapp.com',

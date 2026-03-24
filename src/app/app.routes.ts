@@ -27,6 +27,11 @@ export const routes: Routes = [
       import('./features/who-we-are/who-we-are.component').then(m => m.WhoWeAreComponent),
   },
   {
+    path: 'careers',
+    loadComponent: () =>
+      import('./features/careers/careers.component').then(m => m.CareersComponent),
+  },
+  {
     path: '**',
     redirectTo: '',
   },

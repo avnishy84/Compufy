@@ -32,14 +32,15 @@ import { ButtonComponent } from '../../../shared/button/button.component';
         type="textarea"
         placeholder="Tell us more..."
       />
-      <app-button type="submit" variant="primary" size="lg">
-        Send Message
+      <app-button type="submit" variant="primary" size="lg" [disabled]="submitting()">
+        {{ submitting() ? 'Sending…' : 'Send Message' }}
       </app-button>
     </form>
   `,
 })
 export class ContactFormComponent {
   form = input.required<FormGroup>();
+  submitting = input(false);
   submitForm = output<void>();
 
   getControl(name: string): FormControl {
