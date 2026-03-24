@@ -1,7 +1,8 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { ServiceCategoryComponent } from './service-category/service-category.component';
 import { SERVICES_DATA } from '../../data/static/services.data';
 import { staggerCards } from '../../shared/animations/animations';
+import { SeoService } from '../../core/seo.service';
 
 @Component({
   selector: 'app-services',
@@ -27,4 +28,12 @@ import { staggerCards } from '../../shared/animations/animations';
 })
 export class ServicesComponent {
   readonly categories = SERVICES_DATA;
+
+  constructor() {
+    inject(SeoService).update({
+      title: 'Our Services',
+      description: 'Explore Compufy Technology\'s full range of SaaS engineering, digital solutions, and P.I.T.C. consulting services.',
+      url: 'https://compufytech.web.app/services',
+    });
+  }
 }

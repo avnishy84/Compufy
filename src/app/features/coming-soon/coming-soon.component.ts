@@ -1,5 +1,6 @@
-import { Component, ChangeDetectionStrategy, OnInit, OnDestroy, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, OnDestroy, signal, inject } from '@angular/core';
 import { scrollReveal } from '../../shared/animations/animations';
+import { SeoService } from '../../core/seo.service';
 
 @Component({
   selector: 'app-coming-soon',
@@ -104,6 +105,14 @@ export class ComingSoonComponent implements OnInit, OnDestroy {
   private intervalId: ReturnType<typeof setInterval> | null = null;
 
   readonly countdown = signal(this.getCountdown());
+
+  constructor() {
+    inject(SeoService).update({
+      title: 'Coming Soon',
+      description: 'Compufy Technology is launching soon. We\'re building the next generation of SaaS engineering and IT consulting solutions.',
+      url: 'https://compufytech.web.app/',
+    });
+  }
 
   ngOnInit(): void {
     this.intervalId = setInterval(() => {

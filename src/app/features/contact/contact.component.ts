@@ -6,6 +6,7 @@ import { HttpService } from '../../core/http.service';
 import { API_ENDPOINTS } from '../../data/constants/api.constants';
 import { minLengthTrimmed } from './validators';
 import { scrollReveal } from '../../shared/animations/animations';
+import { SeoService } from '../../core/seo.service';
 
 interface ContactFormControls {
   fullName: FormControl<string | null>;
@@ -39,6 +40,14 @@ interface ContactFormControls {
 export class ContactComponent {
   private readonly httpService = inject(HttpService);
   readonly submitted = signal(false);
+
+  constructor() {
+    inject(SeoService).update({
+      title: 'Contact Us',
+      description: 'Get in touch with Compufy Technology. Send us a message about your SaaS project, IT consulting needs, or digital transformation goals.',
+      url: 'https://compufytech.web.app/contact',
+    });
+  }
 
   readonly contactForm = new FormGroup<ContactFormControls>({
     fullName: new FormControl('', [minLengthTrimmed(2)]),
