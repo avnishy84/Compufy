@@ -1,16 +1,15 @@
-import { Component, ChangeDetectionStrategy, signal, computed, inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, inject } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { EmailService } from '../../core/email.service';
 import { COMPANY_VALUES, WHY_JOIN_ITEMS } from '../../data/static/careers.data';
 import { CompanyValue, WhyJoinItem } from '../../data/models/careers.model';
 import { minLengthTrimmed } from '../contact/validators';
-import { pdfOnly, maxFileSize } from './validators';
 
 interface CareersFormControls {
   fullName: FormControl<string | null>;
+  email: FormControl<string | null>;
   designation: FormControl<string | null>;
   yearsOfExperience: FormControl<number | null>;
-  resume: FormControl<File | null>;
 }
 
 @Component({
@@ -99,7 +98,7 @@ interface CareersFormControls {
             <div class="rounded-2xl border border-brand-accent/30 bg-brand-accent/10 p-10 text-center">
               <div class="mb-4 text-4xl">🎉</div>
               <h3 class="mb-2 text-xl font-bold text-white">Application Received!</h3>
-              <p class="text-slate-400">Thank you for applying. We'll review your application and get back to you soon.</p>
+              <p class="text-slate-400">Our talent acquisition team will connect with you shortly.</p>
             </div>
           } @else {
             <div class="rounded-2xl border border-white/10 bg-surface-card p-8">
@@ -109,6 +108,7 @@ interface CareersFormControls {
                 </div>
               }
               <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()" novalidate>
+
                 <!-- Full Name -->
                 <div class="mb-5">
                   <label for="fullName" class="mb-1.5 block text-sm font-medium text-slate-300">Full Name</label>
@@ -131,16 +131,38 @@ interface CareersFormControls {
                   }
                 </div>
 
+                <!-- Email -->
+                <div class="mb-5">
+                  <label for="email" class="mb-1.5 block text-sm font-medium text-slate-300">Email Address</label>
+                  <input
+                    id="email"
+                    type="email"
+                    formControlName="email"
+                    aria-describedby="email-error"
+                    class="w-full rounded-xl border border-white/10 bg-surface px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition focus:border-brand-primary/50 focus:ring-1 focus:ring-brand-primary/50"
+                    placeholder="your@email.com"
+                  />
+                  @if (applicationForm.controls.email.invalid && applicationForm.controls.email.touched) {
+                    <p id="email-error" class="mt-1.5 text-xs text-red-400">
+                      @if (applicationForm.controls.email.hasError('required')) {
+                        Email address is required
+                      } @else if (applicationForm.controls.email.hasError('email')) {
+                        Please enter a valid email address
+                      }
+                    </p>
+                  }
+                </div>
+
                 <!-- Designation -->
                 <div class="mb-5">
-                  <label for="designation" class="mb-1.5 block text-sm font-medium text-slate-300">Designation</label>
+                  <label for="designation" class="mb-1.5 block text-sm font-medium text-slate-300">Designation / Role Applying For</label>
                   <input
                     id="designation"
                     type="text"
                     formControlName="designation"
                     aria-describedby="designation-error"
                     class="w-full rounded-xl border border-white/10 bg-surface px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition focus:border-brand-primary/50 focus:ring-1 focus:ring-brand-primary/50"
-                    placeholder="Role you are applying for"
+                    placeholder="e.g. Frontend Engineer"
                   />
                   @if (applicationForm.controls.designation.invalid && applicationForm.controls.designation.touched) {
                     <p id="designation-error" class="mt-1.5 text-xs text-red-400">
@@ -150,7 +172,7 @@ interface CareersFormControls {
                 </div>
 
                 <!-- Years of Experience -->
-                <div class="mb-5">
+                <div class="mb-8">
                   <label for="yearsOfExperience" class="mb-1.5 block text-sm font-medium text-slate-300">Years of Experience</label>
                   <input
                     id="yearsOfExperience"
@@ -168,33 +190,6 @@ interface CareersFormControls {
                         Years of experience is required
                       } @else {
                         Please enter a valid number of years (0–50)
-                      }
-                    </p>
-                  }
-                </div>
-
-                <!-- Resume Upload -->
-                <div class="mb-8">
-                  <label for="resume" class="mb-1.5 block text-sm font-medium text-slate-300">Resume (PDF only, max 2 MB)</label>
-                  <input
-                    id="resume"
-                    type="file"
-                    accept=".pdf"
-                    aria-describedby="resume-error"
-                    class="w-full rounded-xl border border-white/10 bg-surface px-4 py-3 text-sm text-slate-400 outline-none transition file:mr-4 file:rounded-lg file:border-0 file:bg-brand-primary/20 file:px-3 file:py-1 file:text-xs file:font-medium file:text-brand-primary focus:border-brand-primary/50 focus:ring-1 focus:ring-brand-primary/50"
-                    (change)="onFileChange($event)"
-                  />
-                  @if (selectedFileName()) {
-                    <p class="mt-1.5 text-xs text-slate-400">Selected: {{ selectedFileName() }}</p>
-                  }
-                  @if (applicationForm.controls.resume.invalid && applicationForm.controls.resume.touched) {
-                    <p id="resume-error" class="mt-1.5 text-xs text-red-400">
-                      @if (applicationForm.controls.resume.hasError('required')) {
-                        Resume is required
-                      } @else if (applicationForm.controls.resume.hasError('pdfOnly')) {
-                        Only PDF files are accepted
-                      } @else if (applicationForm.controls.resume.hasError('maxFileSize')) {
-                        File size must not exceed 2 MB
                       }
                     </p>
                   }
@@ -229,37 +224,25 @@ export class CareersComponent {
 
   readonly applicationForm = new FormGroup<CareersFormControls>({
     fullName: new FormControl<string | null>(null, [Validators.required, minLengthTrimmed(2)]),
+    email: new FormControl<string | null>(null, [Validators.required, Validators.email]),
     designation: new FormControl<string | null>(null, [Validators.required]),
     yearsOfExperience: new FormControl<number | null>(null, [Validators.required, Validators.min(0), Validators.max(50)]),
-    resume: new FormControl<File | null>(null, [Validators.required, pdfOnly(), maxFileSize(2 * 1024 * 1024)]),
   });
-
-  readonly selectedFileName = computed(() => {
-    const file = this.applicationForm.controls.resume.value;
-    return file instanceof File ? file.name : null;
-  });
-
-  onFileChange(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    const file = input.files?.[0] ?? null;
-    this.applicationForm.controls.resume.setValue(file);
-    this.applicationForm.controls.resume.markAsTouched();
-  }
 
   onSubmit(): void {
     if (this.applicationForm.invalid) {
       this.applicationForm.markAllAsTouched();
       return;
     }
-    const { fullName, designation, yearsOfExperience, resume } = this.applicationForm.value;
+    const { fullName, email, designation, yearsOfExperience } = this.applicationForm.value;
     this.submitting.set(true);
     this.submitError.set(null);
     this.emailService
       .sendCareersEmail({
         fullName: fullName ?? '',
+        email: email ?? '',
         designation: designation ?? '',
         yearsOfExperience: yearsOfExperience ?? 0,
-        resume: resume as File,
       })
       .then(() => {
         this.submitted.set(true);
