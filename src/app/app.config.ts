@@ -6,6 +6,12 @@ import { routes } from './app.routes';
 import { AppErrorHandler } from './core/app-error-handler';
 import { httpErrorInterceptor } from './core/http-error.interceptor';
 import { FirebaseService } from './core/firebase.service';
+import { LUCIDE_ICONS, LucideIconProvider } from 'lucide-angular';
+import {
+  Cloud, TrendingUp, Lightbulb, ArrowRight,
+  Code2, LayoutDashboard, Smartphone, Globe,
+  Search, BarChart, Settings, Shield, Users,
+} from 'lucide-angular';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,6 +20,15 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([httpErrorInterceptor])),
     provideAnimations(),
     { provide: ErrorHandler, useClass: AppErrorHandler },
+    {
+      provide: LUCIDE_ICONS,
+      multi: true,
+      useValue: new LucideIconProvider({
+        Cloud, TrendingUp, Lightbulb, ArrowRight,
+        Code2, LayoutDashboard, Smartphone, Globe,
+        Search, BarChart, Settings, Shield, Users,
+      }),
+    },
     // Eagerly initialize Firebase on app start
     {
       provide: APP_INITIALIZER,
