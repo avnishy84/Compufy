@@ -18,14 +18,14 @@ import { FooterComponent } from './shared/footer/footer.component';
              class="text-slate-300 hover:text-white transition-colors text-sm font-medium">Home</a>
           <a routerLink="/services" routerLinkActive="active-link"
              class="text-slate-300 hover:text-white transition-colors text-sm font-medium">Services</a>
+          <a routerLink="/ai-approach" routerLinkActive="active-link"
+             class="text-slate-300 hover:text-white transition-colors text-sm font-medium">AI Approach</a>
           <a routerLink="/who-we-are" routerLinkActive="active-link"
              class="text-slate-300 hover:text-white transition-colors text-sm font-medium">Who We Are</a>
           <a routerLink="/contact" routerLinkActive="active-link"
              class="text-slate-300 hover:text-white transition-colors text-sm font-medium">Contact</a>
           <a routerLink="/careers" routerLinkActive="active-link"
              class="text-slate-300 hover:text-white transition-colors text-sm font-medium">Careers</a>
-          <a routerLink="/ai-approach" routerLinkActive="active-link"
-             class="text-slate-300 hover:text-white transition-colors text-sm font-medium">AI Approach</a>
         </div>
       </div>
     </nav>
