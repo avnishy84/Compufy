@@ -27,6 +27,7 @@ import { RouterLink } from '@angular/router';
               <li><a routerLink="/who-we-are" class="text-slate-400 hover:text-white text-sm transition-colors">Who We Are</a></li>
               <li><a routerLink="/services" class="text-slate-400 hover:text-white text-sm transition-colors">Services</a></li>
               <li><a routerLink="/careers" class="text-slate-400 hover:text-white text-sm transition-colors">Careers</a></li>
+              <li><a routerLink="/ai-approach" class="text-slate-400 hover:text-white text-sm transition-colors">AI Approach</a></li>
             </ul>
           </div>
 

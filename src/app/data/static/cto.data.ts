@@ -1,15 +1,15 @@
 import { FounderProfile } from '../models/founder.model';
 
 export const FOUNDER_DATA: FounderProfile = {
-  name: 'Avnish',
-  title: 'Full-Stack Software Engineer & Cloud Architect',
+  name: 'Avnish Yadav',
+  title: 'Chief Technology Officer',
   location: 'India',
-  role: 'Founder, Compufy Technology',
+  role: 'CTO, Compufy Technology',
   summary:
-    'Avnish is a full-stack software engineer with over years of experience ' +
-    'designing and delivering scalable Stand-alone Softwares, web applications, cloud-native solutions, and ' +
-    'enterprise integrations. He founded Compufy Technology to help businesses modernise ' +
-    'their digital infrastructure through pragmatic engineering and a product-first mindset.',
+    'Avnish Yadav is a full-stack software engineer with extensive experience ' +
+    'designing and delivering scalable standalone software, web applications, cloud-native solutions, and ' +
+    'enterprise integrations. As CTO of Compufy Technology, he leads the technical vision and ' +
+    'engineering execution — ensuring every product is built for performance, reliability, and scale.',
 
   skillCategories: [
     {

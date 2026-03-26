@@ -10,8 +10,8 @@ export const HOME_SEO: SeoConfig = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'Compufy Technology',
-    url: 'https://compufy.tech',
-    logo: 'https://compufy.tech/logo.png',
+    url: 'https://compufytech.web.app/',
+    logo: 'https://compufytech.web.app/logo.webp',
   },
 };
 
@@ -28,19 +28,19 @@ export const SERVICES_SEO: SeoConfig = {
         '@type': 'ListItem',
         position: 1,
         name: 'Web Development',
-        url: 'https://compufy.tech/services/web-development',
+        url: 'https://compufytech.web.app/services/web-development',
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: 'Digital Solutions',
-        url: 'https://compufy.tech/services/digital-solutions',
+        url: 'https://compufytech.web.app/services/digital-solutions',
       },
       {
         '@type': 'ListItem',
         position: 3,
         name: 'P.I.T.C. — Product IT Consulting',
-        url: 'https://compufy.tech/services/pitc',
+        url: 'https://compufytech.web.app/services/pitc',
       },
     ],
   },
@@ -55,7 +55,7 @@ export const CONTACT_SEO: SeoConfig = {
     '@context': 'https://schema.org',
     '@type': 'ContactPage',
     name: 'Contact Compufy Technology',
-    url: 'https://compufy.tech/contact',
+    url: 'https://compufytech.web.app/contact',
   },
 };
 
@@ -68,7 +68,7 @@ export const WHO_WE_ARE_SEO: SeoConfig = {
     '@context': 'https://schema.org',
     '@type': 'AboutPage',
     name: 'Who We Are — Compufy Technology',
-    url: 'https://compufy.tech/who-we-are',
+    url: 'https://compufytech.web.app/who-we-are',
   },
 };
 
@@ -81,7 +81,7 @@ export const CAREERS_SEO: SeoConfig = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: 'Careers at Compufy Technology',
-    url: 'https://compufy.tech/careers',
+    url: 'https://compufytech.web.app/careers',
     description:
       'Explore open roles and career opportunities at Compufy Technology.',
   },

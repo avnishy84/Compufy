@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { FOUNDER_DATA } from '../../data/static/founder.data';
+import { FOUNDER_DATA } from '../../data/static/cto.data';
 import { FounderProfile } from '../../data/models/founder.model';
 
 @Component({
@@ -42,11 +42,49 @@ import { FounderProfile } from '../../data/models/founder.model';
               <!-- Avatar -->
               <div class="flex shrink-0 justify-center lg:justify-start">
                 <div class="relative">
+                  <div class="flex h-28 w-28 items-center justify-center rounded-full border-2 border-brand-secondary/40 bg-brand-secondary/10 text-4xl font-extrabold text-brand-secondary sm:h-36 sm:w-36 sm:text-5xl">
+                    A
+                  </div>
+                  <span class="absolute -bottom-2 -right-2 rounded-full border border-brand-secondary/30 bg-brand-secondary/10 px-2.5 py-0.5 text-xs font-semibold text-brand-secondary">
+                    Founder
+                  </span>
+                </div>
+              </div>
+
+              <!-- Info -->
+              <div class="flex-1 text-center lg:text-left">
+                <h2 class="mb-1 text-2xl font-extrabold text-white sm:text-3xl">Abhishek</h2>
+                <p class="mb-4 text-base font-medium text-brand-secondary">Founder & Client Relations</p>
+                <p class="mb-6 max-w-2xl leading-relaxed text-slate-300">
+                  A visionary with 8+ years in client management and corporate relationship building, Abhishek brings the strategic and interpersonal depth that turns great engineering into lasting partnerships. He bridges the gap between business goals and technical delivery — ensuring every client feels heard, valued, and confident in the work we do together.
+                </p>
+
+                <!-- Expertise badges -->
+                <div class="flex flex-wrap justify-center gap-2 lg:justify-start">
+                  @for (tag of coFounderExpertise; track tag) {
+                    <span class="rounded-full border border-brand-secondary/20 bg-brand-secondary/10 px-3 py-1 text-sm font-medium text-brand-secondary">
+                      {{ tag }}
+                    </span>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ── CTO Card ── -->
+        <section class="mb-20">
+          <div class="rounded-2xl border border-white/10 bg-surface-card p-8 sm:p-12">
+            <div class="flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-16">
+
+              <!-- Avatar -->
+              <div class="flex shrink-0 justify-center lg:justify-start">
+                <div class="relative">
                   <div class="flex h-28 w-28 items-center justify-center rounded-full border-2 border-brand-primary/40 bg-brand-primary/10 text-4xl font-extrabold text-brand-primary sm:h-36 sm:w-36 sm:text-5xl">
                     {{ founder.name.charAt(0) }}
                   </div>
                   <span class="absolute -bottom-2 -right-2 rounded-full border border-brand-accent/30 bg-brand-accent/10 px-2.5 py-0.5 text-xs font-semibold text-brand-accent">
-                    Founder
+                    CTO
                   </span>
                 </div>
               </div>
@@ -65,44 +103,6 @@ import { FounderProfile } from '../../data/models/founder.model';
                     </span>
                   } @empty {
                     <span class="text-sm text-slate-400">No expertise areas listed.</span>
-                  }
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- ── Co-Founder Card ── -->
-        <section class="mb-20">
-          <div class="rounded-2xl border border-white/10 bg-surface-card p-8 sm:p-12">
-            <div class="flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-16">
-
-              <!-- Avatar -->
-              <div class="flex shrink-0 justify-center lg:justify-start">
-                <div class="relative">
-                  <div class="flex h-28 w-28 items-center justify-center rounded-full border-2 border-brand-secondary/40 bg-brand-secondary/10 text-4xl font-extrabold text-brand-secondary sm:h-36 sm:w-36 sm:text-5xl">
-                    A
-                  </div>
-                  <span class="absolute -bottom-2 -right-2 rounded-full border border-brand-secondary/30 bg-brand-secondary/10 px-2.5 py-0.5 text-xs font-semibold text-brand-secondary">
-                    Co-Founder
-                  </span>
-                </div>
-              </div>
-
-              <!-- Info -->
-              <div class="flex-1 text-center lg:text-left">
-                <h2 class="mb-1 text-2xl font-extrabold text-white sm:text-3xl">Abhishek</h2>
-                <p class="mb-4 text-base font-medium text-brand-secondary">Client Relations & Corporate Strategy</p>
-                <p class="mb-6 max-w-2xl leading-relaxed text-slate-300">
-                  A visionary with 8+ years in client management and corporate relationship building, Abhishek brings the strategic and interpersonal depth that turns great engineering into lasting partnerships. He bridges the gap between business goals and technical delivery — ensuring every client feels heard, valued, and confident in the work we do together.
-                </p>
-
-                <!-- Expertise badges -->
-                <div class="flex flex-wrap justify-center gap-2 lg:justify-start">
-                  @for (tag of coFounderExpertise; track tag) {
-                    <span class="rounded-full border border-brand-secondary/20 bg-brand-secondary/10 px-3 py-1 text-sm font-medium text-brand-secondary">
-                      {{ tag }}
-                    </span>
                   }
                 </div>
               </div>

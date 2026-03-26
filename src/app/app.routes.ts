@@ -37,6 +37,11 @@ export const routes: Routes = [
       import('./features/careers/careers.component').then(m => m.CareersComponent),
   },
   {
+    path: 'ai-approach',
+    loadComponent: () =>
+      import('./features/ai-approach/ai-approach.component').then(m => m.AiApproachComponent),
+  },
+  {
     path: 'privacy-policy',
     loadComponent: () =>
       import('./features/privacy-policy/privacy-policy.component').then(m => m.PrivacyPolicyComponent),

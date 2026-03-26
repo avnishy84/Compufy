@@ -4,6 +4,7 @@ import { WhatWeDoSectionComponent } from './what-we-do/what-we-do-section.compon
 import { StatsSectionComponent } from './stats-section/stats-section.component';
 import { HowWeWorkSectionComponent } from './how-we-work-section/how-we-work-section.component';
 import { CtaSectionComponent } from './cta-section/cta-section.component';
+import { AiTeaserSectionComponent } from './ai-teaser-section/ai-teaser-section.component';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +13,7 @@ import { CtaSectionComponent } from './cta-section/cta-section.component';
     HeroSectionComponent,
     WhatWeDoSectionComponent,
     StatsSectionComponent,
+    AiTeaserSectionComponent,
     HowWeWorkSectionComponent,
     CtaSectionComponent,
   ],
@@ -21,6 +23,7 @@ import { CtaSectionComponent } from './cta-section/cta-section.component';
       <app-hero-section />
       <app-what-we-do-section />
       <app-stats-section />
+      <app-ai-teaser-section />
       <app-how-we-work-section />
       <app-cta-section />
     </main>

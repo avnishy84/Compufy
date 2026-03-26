@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { WhoWeAreComponent } from './who-we-are.component';
-import { FOUNDER_DATA } from '../../data/static/founder.data';
+import { FOUNDER_DATA } from '../../data/static/cto.data';
 import { FounderProfile } from '../../data/models/founder.model';
 import { routes } from '../../app.routes';
 
