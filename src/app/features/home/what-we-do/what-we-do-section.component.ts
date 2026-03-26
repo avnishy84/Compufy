@@ -1,10 +1,12 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { CardComponent } from '../../../shared/card/card.component';
 import { scrollReveal } from '../../../shared/animations/animations';
 
 const WHAT_WE_DO = [
   {
     id: 'saas-engineering',
+    slug: 'cloud-infrastructure-devops',
     icon: 'cloud',
     subtitle: 'Cloud-Native Development',
     title: 'SaaS Engineering',
@@ -13,6 +15,7 @@ const WHAT_WE_DO = [
   },
   {
     id: 'growth-engines',
+    slug: 'analytics-business-intelligence',
     icon: 'trending-up',
     subtitle: 'Data & Performance',
     title: 'Growth Engines',
@@ -21,6 +24,7 @@ const WHAT_WE_DO = [
   },
   {
     id: 'strategic-advisory',
+    slug: 'it-strategy-consulting',
     icon: 'lightbulb',
     subtitle: 'P.I.T.C. — Product IT Consulting',
     title: 'Strategic Advisory',
@@ -50,13 +54,19 @@ const WHAT_WE_DO = [
         </p>
         <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           @for (item of items; track item.id) {
-            <app-card
-              [title]="item.title"
-              [description]="item.description"
-              [icon]="item.icon"
-              [subtitle]="item.subtitle"
-              [cta]="item.cta"
-            />
+            <button
+              type="button"
+              class="cursor-pointer text-left"
+              (click)="navigate(item.slug)"
+            >
+              <app-card
+                [title]="item.title"
+                [description]="item.description"
+                [icon]="item.icon"
+                [subtitle]="item.subtitle"
+                [cta]="item.cta"
+              />
+            </button>
           }
         </div>
       </div>
@@ -65,4 +75,9 @@ const WHAT_WE_DO = [
 })
 export class WhatWeDoSectionComponent {
   readonly items = WHAT_WE_DO;
+  private readonly router = inject(Router);
+
+  navigate(slug: string): void {
+    this.router.navigate(['/services', slug]);
+  }
 }

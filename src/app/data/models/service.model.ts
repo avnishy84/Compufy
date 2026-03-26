@@ -10,4 +10,8 @@ export interface Service {
   description: string;
   iconName: string;
   category: 'web-development' | 'digital-solutions' | 'pitc';
+  slug: string;
+  overview?: string;
+  features?: string[];
+  benefits?: string[];
 }

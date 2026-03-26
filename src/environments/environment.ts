@@ -1,5 +1,6 @@
 export const environment = {
   production: false,
+  siteUrl: 'http://localhost:4200',
   emailjs: {
     publicKey: 'gIj6Ftc8C8QGNroUB',
     serviceId: 'service_dz8v4qb',

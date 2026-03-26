@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  siteUrl: 'https://compufy.tech',
   emailjs: {
     publicKey: 'gIj6Ftc8C8QGNroUB',
     serviceId: 'service_dz8v4qb',

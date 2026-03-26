@@ -8,10 +8,10 @@ import { httpErrorInterceptor } from './core/http-error.interceptor';
 import { FirebaseService } from './core/firebase.service';
 import { LUCIDE_ICONS, LucideIconProvider } from 'lucide-angular';
 import {
-  Cloud, TrendingUp, Lightbulb, ArrowRight,
+  Cloud, TrendingUp, Lightbulb, ArrowRight, ArrowLeft,
   Code2, LayoutDashboard, Smartphone, Globe,
-  Search, BarChart, Settings, Shield, Users,
-  Monitor, AppWindow,
+  Search, BarChart, Settings, Shield, ShieldCheck, Users,
+  Monitor, AppWindow, CheckCircle2, SearchX, Zap,
 } from 'lucide-angular';
 
 export const appConfig: ApplicationConfig = {
@@ -25,10 +25,10 @@ export const appConfig: ApplicationConfig = {
       provide: LUCIDE_ICONS,
       multi: true,
       useValue: new LucideIconProvider({
-        Cloud, TrendingUp, Lightbulb, ArrowRight,
+        Cloud, TrendingUp, Lightbulb, ArrowRight, ArrowLeft,
         Code2, LayoutDashboard, Smartphone, Globe,
-        Search, BarChart, Settings, Shield, Users,
-        Monitor, AppWindow,
+        Search, BarChart, Settings, Shield, ShieldCheck, Users,
+        Monitor, AppWindow, CheckCircle2, SearchX, Zap,
       }),
     },
     // Eagerly initialize Firebase on app start

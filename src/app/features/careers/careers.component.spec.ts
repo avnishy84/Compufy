@@ -1,9 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { CareersComponent } from './careers.component';
 import { COMPANY_VALUES, WHY_JOIN_ITEMS } from '../../data/static/careers.data';
-import { API_ENDPOINTS } from '../../data/constants/api.constants';
 import { routes } from '../../app.routes';
 import { AppComponent } from '../../app.component';
 import { provideRouter } from '@angular/router';
@@ -11,10 +8,6 @@ import { EmailService } from '../../core/email.service';
 
 function makeEmailServiceSpy(): jasmine.SpyObj<EmailService> {
   return jasmine.createSpyObj<EmailService>('EmailService', ['sendContactEmail', 'sendCareersEmail']);
-}
-
-function makePdfFile(): File {
-  return new File(['%PDF-1.4'], 'resume.pdf', { type: 'application/pdf' });
 }
 
 describe('CareersComponent', () => {
@@ -72,8 +65,6 @@ describe('CareersComponent', () => {
     it('should contain a Careers nav link pointing to /careers', () => {
       const fixture = TestBed.createComponent(AppComponent);
       fixture.detectChanges();
-      const anchors: NodeListOf<HTMLAnchorElement> = fixture.nativeElement.querySelectorAll('a[ng-reflect-router-link="/careers"], a[routerlink="/careers"]');
-      // Check by text content as routerLink is resolved at runtime
       const allAnchors: HTMLAnchorElement[] = Array.from(fixture.nativeElement.querySelectorAll('a'));
       const careersLink = allAnchors.find(a => a.textContent?.trim() === 'Careers');
       expect(careersLink).toBeTruthy();
@@ -132,9 +123,9 @@ describe('CareersComponent', () => {
     function fillValidForm(): void {
       component.applicationForm.setValue({
         fullName: 'Jane Doe',
+        email: 'jane@example.com',
         designation: 'Frontend Engineer',
         yearsOfExperience: 3,
-        resume: makePdfFile(),
       });
     }
 
@@ -143,9 +134,9 @@ describe('CareersComponent', () => {
       component.onSubmit();
       const ctrl = component.applicationForm.controls;
       expect(ctrl.fullName.touched).toBeTrue();
+      expect(ctrl.email.touched).toBeTrue();
       expect(ctrl.designation.touched).toBeTrue();
       expect(ctrl.yearsOfExperience.touched).toBeTrue();
-      expect(ctrl.resume.touched).toBeTrue();
       expect(emailSpy.sendCareersEmail).not.toHaveBeenCalled();
     });
 
@@ -193,25 +184,7 @@ describe('CareersComponent', () => {
     });
   });
 
-  // ── 7.12 File input accept attribute ────────────────────────────────────
-  describe('file input', () => {
-    beforeEach(async () => {
-      await TestBed.configureTestingModule({
-        imports: [CareersComponent],
-        providers: [{ provide: EmailService, useValue: makeEmailServiceSpy() }],
-      }).compileComponents();
-    });
-
-    it('should have accept=".pdf" on the file input', () => {
-      const fixture = TestBed.createComponent(CareersComponent);
-      fixture.detectChanges();
-      const fileInput: HTMLInputElement = fixture.nativeElement.querySelector('input[type="file"]');
-      expect(fileInput).toBeTruthy();
-      expect(fileInput.getAttribute('accept')).toBe('.pdf');
-    });
-  });
-
-  // ── 7.13 aria-describedby links ──────────────────────────────────────────
+  // ── 7.12 aria-describedby links ──────────────────────────────────────────
   describe('aria-describedby', () => {
     let fixture: ReturnType<typeof TestBed.createComponent<CareersComponent>>;
 
@@ -227,7 +200,7 @@ describe('CareersComponent', () => {
       fixture.detectChanges();
     });
 
-    const fields = ['fullName', 'designation', 'yearsOfExperience', 'resume'];
+    const fields = ['fullName', 'email', 'designation', 'yearsOfExperience'];
 
     fields.forEach(fieldId => {
       it(`input#${fieldId} should have aria-describedby pointing to an error element`, () => {

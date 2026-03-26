@@ -39,6 +39,7 @@ const serviceArb = fc.record({
   title: fc.string({ minLength: 1 }),
   description: fc.string({ minLength: 1 }),
   iconName: fc.string({ minLength: 1 }),
+  slug: fc.string({ minLength: 1 }),
   category: fc.constantFrom(
     'web-development' as const,
     'digital-solutions' as const,

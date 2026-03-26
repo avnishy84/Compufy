@@ -91,7 +91,7 @@ import { FounderProfile } from '../../data/models/founder.model';
 
               <!-- Info -->
               <div class="flex-1 text-center lg:text-left">
-                <h2 class="mb-1 text-2xl font-extrabold text-white sm:text-3xl">Abhishek Yadav</h2>
+                <h2 class="mb-1 text-2xl font-extrabold text-white sm:text-3xl">Abhishek</h2>
                 <p class="mb-4 text-base font-medium text-brand-secondary">Client Relations & Corporate Strategy</p>
                 <p class="mb-6 max-w-2xl leading-relaxed text-slate-300">
                   A visionary with 8+ years in client management and corporate relationship building, Abhishek brings the strategic and interpersonal depth that turns great engineering into lasting partnerships. He bridges the gap between business goals and technical delivery — ensuring every client feels heard, valued, and confident in the work we do together.

@@ -2,11 +2,12 @@ import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { ErrorNotificationComponent } from './core/error-notification/error-notification.component';
 import { ErrorHandlerService } from './core/error-handler.service';
+import { FooterComponent } from './shared/footer/footer.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, ErrorNotificationComponent],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, ErrorNotificationComponent, FooterComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <nav class="fixed top-0 left-0 right-0 z-50 bg-surface-glass backdrop-blur-glass border-b border-white/10">
@@ -26,8 +27,11 @@ import { ErrorHandlerService } from './core/error-handler.service';
         </div>
       </div>
     </nav>
-    <div class="pt-16">
-      <router-outlet />
+    <div class="pt-16 flex flex-col min-h-screen">
+      <main class="flex-1">
+        <router-outlet />
+      </main>
+      <app-footer />
     </div>
     @if (errorHandlerService.errorSignal()) {
       <app-error-notification />

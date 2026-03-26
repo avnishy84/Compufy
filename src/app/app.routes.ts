@@ -17,6 +17,11 @@ export const routes: Routes = [
       import('./features/services/services.component').then(m => m.ServicesComponent),
   },
   {
+    path: 'services/:id',
+    loadComponent: () =>
+      import('./features/services/service-details/service-details.component').then(m => m.ServiceDetailsComponent),
+  },
+  {
     path: 'contact',
     loadComponent: () =>
       import('./features/contact/contact.component').then(m => m.ContactComponent),
@@ -30,6 +35,16 @@ export const routes: Routes = [
     path: 'careers',
     loadComponent: () =>
       import('./features/careers/careers.component').then(m => m.CareersComponent),
+  },
+  {
+    path: 'privacy-policy',
+    loadComponent: () =>
+      import('./features/privacy-policy/privacy-policy.component').then(m => m.PrivacyPolicyComponent),
+  },
+  {
+    path: 'terms-of-service',
+    loadComponent: () =>
+      import('./features/terms-of-service/terms-of-service.component').then(m => m.TermsOfServiceComponent),
   },
   {
     path: '**',

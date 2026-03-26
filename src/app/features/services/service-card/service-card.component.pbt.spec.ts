@@ -30,6 +30,7 @@ describe('ServiceCardComponent PBT', () => {
               title: fc.string({ minLength: 1 }),
               description: fc.string({ minLength: 1 }),
               iconName: fc.string({ minLength: 1 }),
+              slug: fc.string({ minLength: 1 }),
               category: fc.constantFrom('web-development', 'digital-solutions', 'pitc'),
             }),
             (service) => {
