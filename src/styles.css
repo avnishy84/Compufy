@@ -11,3 +11,9 @@ body {
   0%   { transform: translateY(-100%); opacity: 1; }
   100% { transform: translateY(400%);  opacity: 0; }
 }
+
+.target-breaking {
+  transition: transform 600ms ease-in, opacity 600ms ease-in;
+  transform: translateY(200px) rotate(15deg);
+  opacity: 0;
+}

@@ -23,7 +23,7 @@ import { scrollReveal } from '../../../shared/animations/animations';
       <div class="relative z-10 flex flex-col items-center gap-8 text-center lg:flex-row lg:text-left lg:gap-16">
         <!-- Text content -->
         <div class="max-w-2xl">
-          <h1 class="mb-4 text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+          <h1 class="target mb-4 text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
             Powering the Future with
             <span class="bg-gradient-to-r from-brand-primary to-brand-accent bg-clip-text text-transparent">
               Smart Technology
@@ -37,9 +37,9 @@ import { scrollReveal } from '../../../shared/animations/animations';
           </app-button>
         </div>
 
-        <!-- CSS 3D tech element -->
-        <div class="relative shrink-0" aria-hidden="true">
-          <div class="tech-cube">
+        <!-- CSS 3D tech element + game trigger -->
+        <div class="relative shrink-0 flex flex-col items-center gap-4">
+          <div class="tech-cube" aria-hidden="true">
             <div class="face front"></div>
             <div class="face back"></div>
             <div class="face left"></div>

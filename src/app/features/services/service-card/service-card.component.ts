@@ -12,7 +12,7 @@ import { Service } from '../../../data/models/service.model';
   template: `
     <button
       type="button"
-      class="group relative flex h-full w-full cursor-pointer flex-col rounded-2xl border border-slate-700/50 bg-slate-900/60 p-6 text-left backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand-primary/60 hover:bg-slate-800/70 hover:shadow-lg hover:shadow-brand-primary/10"
+      class="target group relative flex h-full w-full cursor-pointer flex-col rounded-2xl border border-slate-700/50 bg-slate-900/60 p-6 text-left backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand-primary/60 hover:bg-slate-800/70 hover:shadow-lg hover:shadow-brand-primary/10"
       (click)="navigate()"
     >
       <!-- Icon -->
