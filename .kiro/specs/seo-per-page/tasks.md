@@ -56,25 +56,25 @@ Implement per-page SEO metadata across all routed pages using a centralised `Seo
   - `COMING_SOON_SEO`: title `'Coming Soon'`, description, canonicalPath `'/coming-soon'`, no jsonLd
   - _Requirements: 2.1–2.5, 3.1–3.4, 5.1–5.4, 6.1–6.4, 7.1–7.4, 8.1_
 
-- [~] 4. Add default OG image placeholder
+- [ ] 4. Add default OG image placeholder
   - Create `public/og-default.png` as a placeholder static asset (1×1 transparent PNG or copy an existing brand image)
   - _Requirements: 11.3_
 
 - [ ] 5. Wire SeoService into page components
-  - [~] 5.1 Modify `src/app/features/home/home.component.ts` — inject `SeoService`, call `setPage(HOME_SEO)` in constructor
+  - [ ] 5.1 Modify `src/app/features/home/home.component.ts` — inject `SeoService`, call `setPage(HOME_SEO)` in constructor
     - _Requirements: 2.1–2.5_
 
-  - [~] 5.2 Modify `src/app/features/services/services.component.ts` — inject `SeoService`, call `setPage(SERVICES_SEO)` in constructor
+  - [ ] 5.2 Modify `src/app/features/services/services.component.ts` — inject `SeoService`, call `setPage(SERVICES_SEO)` in constructor
     - _Requirements: 3.1–3.4_
 
-  - [~] 5.3 Modify `src/app/features/services/service-details/service-details.component.ts` — inject `SeoService` and `ActivatedRoute`, derive config from service data via slug, call `setPage(buildServiceSeoConfig(service))` for valid slugs or `setPageNotFound('Service Not Found')` for invalid slugs
+  - [ ] 5.3 Modify `src/app/features/services/service-details/service-details.component.ts` — inject `SeoService` and `ActivatedRoute`, derive config from service data via slug, call `setPage(buildServiceSeoConfig(service))` for valid slugs or `setPageNotFound('Service Not Found')` for invalid slugs
     - Add `buildServiceSeoConfig(service)` helper that constructs `SeoConfig` with Service JSON-LD, truncating overview to 160 chars
     - _Requirements: 4.1–4.6_
 
-  - [~] 5.4 Modify `src/app/features/contact/contact.component.ts` — inject `SeoService`, call `setPage(CONTACT_SEO)` in constructor
+  - [ ] 5.4 Modify `src/app/features/contact/contact.component.ts` — inject `SeoService`, call `setPage(CONTACT_SEO)` in constructor
     - _Requirements: 5.1–5.4_
 
-  - [~] 5.5 Modify `src/app/features/who-we-are/who-we-are.component.ts` — inject `SeoService`, call `setPage(WHO_WE_ARE_SEO)` in constructor
+  - [ ] 5.5 Modify `src/app/features/who-we-are/who-we-are.component.ts` — inject `SeoService`, call `setPage(WHO_WE_ARE_SEO)` in constructor
     - _Requirements: 6.1–6.4_
 
   - [ ] 5.6 Modify `src/app/features/careers/careers.component.ts` — inject `SeoService`, call `setPage(CAREERS_SEO)` in constructor
