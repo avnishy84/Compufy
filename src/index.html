@@ -4,6 +4,12 @@
   <meta charset="utf-8">
   <meta name="google-site-verification" content="g9Wm09oArip0L0kcpdxdlOXMjnWOHNII-H-66Lp4HK4" />
   <title>Compufy Technology — SaaS Engineering &amp; IT Consulting</title>
+
+  <!-- Preconnect to critical third-party origins -->
+  <link rel="preconnect" href="https://firebase.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://firebaseinstallations.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="dns-prefetch" href="https://www.google-analytics.com">
   <meta name="description" content="Architecting secure, multi-tenant SaaS platforms and aligning your tech strategy for scale. Compufy Technology delivers cutting-edge web development, cloud solutions, and professional IT consulting.">
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -38,6 +44,40 @@
   <link rel="sitemap" type="application/xml" href="/sitemap.xml">
 </head>
 <body>
-  <app-root></app-root>
+  <!-- CLS skeleton: reserves hero height so layout doesn't shift when Angular boots -->
+  <app-root>
+    <div style="min-height:100svh;background:#0f172a;display:flex;align-items:center;justify-content:center;" aria-hidden="true">
+      <div style="width:100%;max-width:42rem;padding:1.5rem">
+        <!-- Reserved space for h1 — matches text-4xl/5xl/6xl line-height -->
+        <div style="height:4.5rem;background:rgba(255,255,255,0.06);border-radius:0.5rem;margin-bottom:1rem"></div>
+        <div style="height:4.5rem;background:rgba(255,255,255,0.06);border-radius:0.5rem;margin-bottom:2rem;width:75%"></div>
+        <div style="height:1.25rem;background:rgba(255,255,255,0.04);border-radius:0.25rem;margin-bottom:0.75rem"></div>
+        <div style="height:1.25rem;background:rgba(255,255,255,0.04);border-radius:0.25rem;width:80%"></div>
+      </div>
+    </div>
+  </app-root>
+
+  <!-- Google Tag Manager — deferred to avoid blocking main thread -->
+  <script>
+    window.addEventListener('load', function () {
+      setTimeout(function () {
+        (function(w,d,s,l,i){
+          w[l]=w[l]||[];
+          w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+          var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),
+              dl=l!='dataLayer'?'&l='+l:'';
+          j.async=true;
+          j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+          f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-5KNS5N63');
+      }, 3500);
+    });
+  </script>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5KNS5N63"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
 </body>
 </html>

@@ -11,7 +11,7 @@ import { scrollReveal } from '../../../shared/animations/animations';
   animations: [scrollReveal],
   template: `
     <section
-      class="relative flex min-h-screen items-center justify-center overflow-hidden bg-surface px-6"
+      class="relative flex min-h-svh items-center justify-center overflow-hidden bg-surface px-6"
       [@scrollReveal]
     >
       <!-- Background gradient -->
@@ -23,7 +23,8 @@ import { scrollReveal } from '../../../shared/animations/animations';
       <div class="relative z-10 flex flex-col items-center gap-8 text-center lg:flex-row lg:text-left lg:gap-16">
         <!-- Text content -->
         <div class="max-w-2xl">
-          <h1 class="target mb-4 text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+          <h1 class="target mb-4 text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl"
+              style="min-height:4.5rem;content-visibility:visible">
             Powering the Future with
             <span class="bg-gradient-to-r from-brand-primary to-brand-accent bg-clip-text text-transparent">
               Smart Technology
