@@ -1,11 +1,10 @@
-import { ApplicationConfig, ErrorHandler, provideZoneChangeDetection, inject, APP_INITIALIZER } from '@angular/core';
+import { ApplicationConfig, ErrorHandler, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { routes } from './app.routes';
 import { AppErrorHandler } from './core/app-error-handler';
 import { httpErrorInterceptor } from './core/http-error.interceptor';
-import { FirebaseService } from './core/firebase.service';
 import { LUCIDE_ICONS, LucideIconProvider } from 'lucide-angular';
 import {
   Cloud, TrendingUp, Lightbulb, ArrowRight, ArrowLeft,
@@ -31,14 +30,6 @@ export const appConfig: ApplicationConfig = {
         Monitor, AppWindow, CheckCircle2, SearchX, Zap, Gamepad2, X,
       }),
     },
-    // Eagerly initialize Firebase on app start
-    {
-      provide: APP_INITIALIZER,
-      useFactory: () => {
-        const firebase = inject(FirebaseService);
-        return () => firebase; // service constructor handles init
-      },
-      multi: true,
-    },
+    // Firebase initializes lazily on first injection — not blocking bootstrap
   ]
 };
