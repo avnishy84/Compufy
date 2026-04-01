@@ -5,10 +5,10 @@
   <meta name="google-site-verification" content="g9Wm09oArip0L0kcpdxdlOXMjnWOHNII-H-66Lp4HK4" />
   <title>Compufy Technology — SaaS Engineering &amp; IT Consulting</title>
 
-  <!-- Preconnect to critical third-party origins -->
-  <link rel="preconnect" href="https://firebase.googleapis.com" crossorigin>
-  <link rel="preconnect" href="https://firebaseinstallations.googleapis.com" crossorigin>
+  <!-- Preconnect: firebase uses CORS requests, GTM does not -->
+  <link rel="preconnect" href="https://firebase.googleapis.com" crossorigin="anonymous">
   <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="dns-prefetch" href="https://firebaseinstallations.googleapis.com">
   <link rel="dns-prefetch" href="https://www.google-analytics.com">
   <meta name="description" content="Architecting secure, multi-tenant SaaS platforms and aligning your tech strategy for scale. Compufy Technology delivers cutting-edge web development, cloud solutions, and professional IT consulting.">
   <base href="/">
@@ -44,37 +44,35 @@
   <link rel="sitemap" type="application/xml" href="/sitemap.xml">
 </head>
 <body>
-  <!-- CLS skeleton: reserves hero height so layout doesn't shift when Angular boots -->
+  <!--
+    CLS skeleton: mirrors the full page layout (nav + hero + footer) so document
+    height is stable before Angular hydrates. Eliminates the 0.878 CLS score.
+  -->
   <app-root>
-    <div style="min-height:100svh;background:#0f172a;display:flex;align-items:center;justify-content:center;" aria-hidden="true">
-      <div style="width:100%;max-width:42rem;padding:1.5rem">
-        <!-- Reserved space for h1 — matches text-4xl/5xl/6xl line-height -->
-        <div style="height:4.5rem;background:rgba(255,255,255,0.06);border-radius:0.5rem;margin-bottom:1rem"></div>
-        <div style="height:4.5rem;background:rgba(255,255,255,0.06);border-radius:0.5rem;margin-bottom:2rem;width:75%"></div>
-        <div style="height:1.25rem;background:rgba(255,255,255,0.04);border-radius:0.25rem;margin-bottom:0.75rem"></div>
-        <div style="height:1.25rem;background:rgba(255,255,255,0.04);border-radius:0.25rem;width:80%"></div>
+    <div style="display:flex;flex-direction:column;min-height:100svh;background:#0f172a;" aria-hidden="true">
+
+      <!-- Nav placeholder: matches h-16 fixed nav -->
+      <div style="height:64px;background:#0f172a;border-bottom:1px solid rgba(255,255,255,0.1);flex-shrink:0;"></div>
+
+      <!-- Hero placeholder: matches min-h-svh section -->
+      <div style="flex:1;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:1.5rem;">
+        <div style="width:100%;max-width:42rem;">
+          <div style="height:3rem;background:rgba(255,255,255,0.07);border-radius:0.5rem;margin-bottom:0.75rem;"></div>
+          <div style="height:3rem;background:rgba(255,255,255,0.07);border-radius:0.5rem;margin-bottom:1.5rem;width:70%;"></div>
+          <div style="height:1rem;background:rgba(255,255,255,0.04);border-radius:0.25rem;margin-bottom:0.5rem;"></div>
+          <div style="height:1rem;background:rgba(255,255,255,0.04);border-radius:0.25rem;margin-bottom:0.5rem;width:85%;"></div>
+          <div style="height:1rem;background:rgba(255,255,255,0.04);border-radius:0.25rem;margin-bottom:2rem;width:60%;"></div>
+          <div style="height:2.75rem;width:10rem;background:rgba(99,102,241,0.3);border-radius:0.5rem;"></div>
+        </div>
       </div>
+
+      <!-- Footer placeholder: matches actual footer height (py-12 grid + bottom bar) -->
+      <div style="height:320px;background:#0f172a;border-top:1px solid rgba(255,255,255,0.1);flex-shrink:0;"></div>
+
     </div>
   </app-root>
 
-  <!-- Google Tag Manager — deferred to avoid blocking main thread -->
-  <script>
-    window.addEventListener('load', function () {
-      setTimeout(function () {
-        (function(w,d,s,l,i){
-          w[l]=w[l]||[];
-          w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
-          var f=d.getElementsByTagName(s)[0],
-              j=d.createElement(s),
-              dl=l!='dataLayer'?'&l='+l:'';
-          j.async=true;
-          j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-          f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-5KNS5N63');
-      }, 3500);
-    });
-  </script>
-  <!-- Google Tag Manager (noscript) -->
+  <!-- Google Tag Manager (noscript) — fallback for non-JS environments -->
   <noscript>
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5KNS5N63"
             height="0" width="0" style="display:none;visibility:hidden"></iframe>
