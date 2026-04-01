@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, OnInit } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { ErrorNotificationComponent } from './core/error-notification/error-notification.component';
 import { ErrorHandlerService } from './core/error-handler.service';
@@ -6,6 +6,7 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { RocketGameOverlayComponent } from './features/rocket-game/rocket-game-overlay.component';
 import { LucideAngularModule } from 'lucide-angular';
 import { GameStateService } from './features/rocket-game/game-state.service';
+import { SeoService } from './core/seo.service';
 
 @Component({
   selector: 'app-root',
@@ -70,7 +71,12 @@ import { GameStateService } from './features/rocket-game/game-state.service';
     }
   `],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   readonly errorHandlerService = inject(ErrorHandlerService);
   readonly gameState = inject(GameStateService);
+  private readonly seo = inject(SeoService);
+
+  ngOnInit(): void {
+    this.seo.init();
+  }
 }
