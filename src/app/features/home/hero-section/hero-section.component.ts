@@ -19,7 +19,7 @@ import { scrollReveal } from '../../../shared/animations/animations';
         <div class="absolute right-1/4 bottom-1/4 h-96 w-96 translate-x-1/2 translate-y-1/2 rounded-full bg-brand-secondary/10 blur-3xl"></div>
       </div>
 
-      <div class="relative z-10 flex flex-col items-center gap-8 text-center lg:flex-row lg:text-left lg:gap-16">
+      <div class="relative z-10 flex flex-col items-center gap-20 text-center lg:flex-row lg:text-left lg:gap-16">
         <!-- Text content: h1 renders immediately, sub-content animates in -->
         <div class="max-w-2xl">
           <h1 class="target mb-4 text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">

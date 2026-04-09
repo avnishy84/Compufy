@@ -10,7 +10,7 @@ import {
   Cloud, TrendingUp, Lightbulb, ArrowRight, ArrowLeft,
   Code2, LayoutDashboard, Smartphone, Globe,
   Search, BarChart, Settings, Shield, ShieldCheck, Users,
-  Monitor, AppWindow, CheckCircle2, SearchX, Zap, Gamepad2, X,
+  Monitor, AppWindow, CheckCircle2, SearchX, Zap, Gamepad2, X, Eye,
 } from 'lucide-angular';
 
 export const appConfig: ApplicationConfig = {
@@ -27,7 +27,7 @@ export const appConfig: ApplicationConfig = {
         Cloud, TrendingUp, Lightbulb, ArrowRight, ArrowLeft,
         Code2, LayoutDashboard, Smartphone, Globe,
         Search, BarChart, Settings, Shield, ShieldCheck, Users,
-        Monitor, AppWindow, CheckCircle2, SearchX, Zap, Gamepad2, X,
+        Monitor, AppWindow, CheckCircle2, SearchX, Zap, Gamepad2, X, Eye,
       }),
     },
     // Firebase initializes lazily on first injection — not blocking bootstrap
