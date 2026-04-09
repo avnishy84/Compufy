@@ -1,4 +1,5 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { Meta, Title } from '@angular/platform-browser';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
@@ -112,6 +113,8 @@ export class SeoService {
   private readonly title = inject(Title);
   private readonly meta = inject(Meta);
   private readonly router = inject(Router);
+  private readonly doc = inject(DOCUMENT);
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   init(): void {
     this.router.events.pipe(
@@ -144,18 +147,20 @@ export class SeoService {
   }
 
   private setCanonical(url: string): void {
-    let link = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (!this.isBrowser) return;
+    let link = this.doc.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (!link) {
-      link = document.createElement('link');
+      link = this.doc.createElement('link');
       link.setAttribute('rel', 'canonical');
-      document.head.appendChild(link);
+      this.doc.head.appendChild(link);
     }
     link.setAttribute('href', url);
   }
 
   private setStructuredData(url: string, pageSchema?: object): void {
+    if (!this.isBrowser) return;
     // Remove previous injected schemas
-    document.querySelectorAll('script[data-seo="true"]').forEach(s => s.remove());
+    this.doc.querySelectorAll('script[data-seo="true"]').forEach(s => s.remove());
 
     const schemas: object[] = [];
 
@@ -177,11 +182,11 @@ export class SeoService {
     }
 
     schemas.forEach(schema => {
-      const script = document.createElement('script');
+      const script = this.doc.createElement('script');
       script.type = 'application/ld+json';
       script.setAttribute('data-seo', 'true');
       script.textContent = JSON.stringify(schema);
-      document.head.appendChild(script);
+      this.doc.head.appendChild(script);
     });
   }
 }
