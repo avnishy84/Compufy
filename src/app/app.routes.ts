@@ -52,6 +52,13 @@ export const routes: Routes = [
       import('./features/terms-of-service/terms-of-service.component').then(m => m.TermsOfServiceComponent),
   },
   {
+    path: 'case-studies/:slug',
+    loadComponent: () =>
+      import('./features/case-studies/case-study-detail/case-study-detail.component').then(
+        m => m.CaseStudyDetailComponent
+      ),
+  },
+  {
     path: '**',
     redirectTo: '',
   },
