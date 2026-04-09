@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, NO_ERRORS_SCHEMA } from '@angular/core';
+import { provideRouter } from '@angular/router';
 import { WhoWeAreComponent } from './who-we-are.component';
 import { FOUNDER_DATA } from '../../data/static/cto.data';
 import { FounderProfile } from '../../data/models/founder.model';
@@ -177,13 +178,9 @@ describe('WhoWeAreComponent', () => {
   });
 });
 
-
 // ---------------------------------------------------------------------------
 // who-we-are-enhancement tests
 // ---------------------------------------------------------------------------
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { provideRouter } from '@angular/router';
-
 describe('who-we-are-enhancement', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -199,7 +196,7 @@ describe('who-we-are-enhancement', () => {
     return fixture;
   }
 
-  // 11.1 — Our Story paragraph text is present in the DOM
+  // 11.1 â€” Our Story paragraph text is present in the DOM
   it('should render Our Story paragraph text', () => {
     const fixture = createFixture();
     expect(fixture.nativeElement.textContent).toContain(
@@ -207,7 +204,7 @@ describe('who-we-are-enhancement', () => {
     );
   });
 
-  // 11.2 — Mission and Vision card texts are present and exactly two cards render
+  // 11.2 â€” Mission and Vision card texts are present and exactly two cards render
   it('should render mission card text', () => {
     const fixture = createFixture();
     expect(fixture.nativeElement.textContent).toContain(
@@ -227,7 +224,7 @@ describe('who-we-are-enhancement', () => {
     expect(fixture.componentInstance.missionVisionCards.length).toBe(2);
   });
 
-  // 11.3 — All five core value labels are present in the DOM
+  // 11.3 â€” All five core value labels are present in the DOM
   it('should render all five core value labels', () => {
     const fixture = createFixture();
     const text: string = fixture.nativeElement.textContent;
@@ -238,7 +235,7 @@ describe('who-we-are-enhancement', () => {
     expect(text).toContain('Continuous Growth');
   });
 
-  // 11.4 — All four differentiator texts are present in the DOM
+  // 11.4 â€” All four differentiator texts are present in the DOM
   it('should render all four differentiator texts', () => {
     const fixture = createFixture();
     const text: string = fixture.nativeElement.textContent;
@@ -248,7 +245,7 @@ describe('who-we-are-enhancement', () => {
     expect(text).toContain('Clean, maintainable, future-proof architecture');
   });
 
-  // 11.5 — All five expertise tags are present in the DOM
+  // 11.5 â€” All five expertise tags are present in the DOM
   it('should render all five expertise tags', () => {
     const fixture = createFixture();
     const text: string = fixture.nativeElement.textContent;
@@ -259,7 +256,7 @@ describe('who-we-are-enhancement', () => {
     expect(text).toContain('Performance Optimization');
   });
 
-  // 11.6 — CTO card: <h2> contains founder.title and appears before the name <p>
+  // 11.6 â€” CTO card: <h2> contains founder.title and appears before the name <p>
   it('should render CTO designation as h2 before the name paragraph', () => {
     const fixture = createFixture();
     const el: HTMLElement = fixture.nativeElement;
@@ -275,7 +272,7 @@ describe('who-we-are-enhancement', () => {
     expect(nameParagraph).toBeTruthy();
   });
 
-  // 11.7 — Team card description paragraph and expertise badges are still present
+  // 11.7 â€” Team card description paragraph and expertise badges are still present
   it('should render founder summary text', () => {
     const fixture = createFixture();
     expect(fixture.nativeElement.textContent).toContain(FOUNDER_DATA.summary);
@@ -286,7 +283,7 @@ describe('who-we-are-enhancement', () => {
     expect(fixture.nativeElement.textContent).toContain('Languages');
   });
 
-  // 11.8 — Team Philosophy text is present in the DOM
+  // 11.8 â€” Team Philosophy text is present in the DOM
   it('should render Team Philosophy text', () => {
     const fixture = createFixture();
     expect(fixture.nativeElement.textContent).toContain(
@@ -294,7 +291,7 @@ describe('who-we-are-enhancement', () => {
     );
   });
 
-  // 11.9 — Exactly four achievement stat cards render with labels
+  // 11.9 â€” Exactly four achievement stat cards render with labels
   it('should have exactly four achievements', () => {
     const fixture = createFixture();
     expect(fixture.componentInstance.achievements.length).toBe(4);
@@ -309,7 +306,7 @@ describe('who-we-are-enhancement', () => {
     expect(text).toContain('Years of Experience');
   });
 
-  // 11.10 — CTA heading text and /contact routerLink are present
+  // 11.10 â€” CTA heading text and /contact routerLink are present
   it('should render CTA heading text', () => {
     const fixture = createFixture();
     expect(fixture.nativeElement.textContent).toContain(
