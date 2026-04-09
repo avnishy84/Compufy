@@ -59,6 +59,16 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'clients/:slug',
+    loadComponent: () =>
+      import('./features/clients/client-project-detail/client-project-detail.component').then(m => m.ClientProjectDetailComponent),
+  },
+  {
+    path: 'demo-unavailable',
+    loadComponent: () =>
+      import('./features/demo-unavailable/demo-unavailable.component').then(m => m.DemoUnavailableComponent),
+  },
+  {
     path: '**',
     redirectTo: '',
   },
