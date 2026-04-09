@@ -176,3 +176,151 @@ describe('WhoWeAreComponent', () => {
     });
   });
 });
+
+
+// ---------------------------------------------------------------------------
+// who-we-are-enhancement tests
+// ---------------------------------------------------------------------------
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { provideRouter } from '@angular/router';
+
+describe('who-we-are-enhancement', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [WhoWeAreComponent],
+      providers: [provideRouter([])],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
+  });
+
+  function createFixture() {
+    const fixture = TestBed.createComponent(WhoWeAreComponent);
+    fixture.detectChanges();
+    return fixture;
+  }
+
+  // 11.1 — Our Story paragraph text is present in the DOM
+  it('should render Our Story paragraph text', () => {
+    const fixture = createFixture();
+    expect(fixture.nativeElement.textContent).toContain(
+      'Compufy Technology was founded with a vision to bridge the gap'
+    );
+  });
+
+  // 11.2 — Mission and Vision card texts are present and exactly two cards render
+  it('should render mission card text', () => {
+    const fixture = createFixture();
+    expect(fixture.nativeElement.textContent).toContain(
+      'To build scalable, efficient, and future-ready technology solutions that empower businesses.'
+    );
+  });
+
+  it('should render vision card text', () => {
+    const fixture = createFixture();
+    expect(fixture.nativeElement.textContent).toContain(
+      'To become a trusted technology partner for startups and enterprises globally.'
+    );
+  });
+
+  it('should have exactly two missionVisionCards', () => {
+    const fixture = createFixture();
+    expect(fixture.componentInstance.missionVisionCards.length).toBe(2);
+  });
+
+  // 11.3 — All five core value labels are present in the DOM
+  it('should render all five core value labels', () => {
+    const fixture = createFixture();
+    const text: string = fixture.nativeElement.textContent;
+    expect(text).toContain('Innovation First');
+    expect(text).toContain('Client-Centric Approach');
+    expect(text).toContain('Performance & Quality');
+    expect(text).toContain('Transparency');
+    expect(text).toContain('Continuous Growth');
+  });
+
+  // 11.4 — All four differentiator texts are present in the DOM
+  it('should render all four differentiator texts', () => {
+    const fixture = createFixture();
+    const text: string = fixture.nativeElement.textContent;
+    expect(text).toContain('Focus on real-world scalable solutions');
+    expect(text).toContain('Strong blend of business and technology thinking');
+    expect(text).toContain('Fast execution with startup mindset');
+    expect(text).toContain('Clean, maintainable, future-proof architecture');
+  });
+
+  // 11.5 — All five expertise tags are present in the DOM
+  it('should render all five expertise tags', () => {
+    const fixture = createFixture();
+    const text: string = fixture.nativeElement.textContent;
+    expect(text).toContain('Full Stack Development');
+    expect(text).toContain('Cloud & DevOps');
+    expect(text).toContain('AI & Automation');
+    expect(text).toContain('System Design & Architecture');
+    expect(text).toContain('Performance Optimization');
+  });
+
+  // 11.6 — CTO card: <h2> contains founder.title and appears before the name <p>
+  it('should render CTO designation as h2 before the name paragraph', () => {
+    const fixture = createFixture();
+    const el: HTMLElement = fixture.nativeElement;
+    const headings = Array.from(el.querySelectorAll('h2')) as HTMLElement[];
+    const ctoHeading = headings.find(h => h.textContent?.includes('Chief Technology Officer'));
+    expect(ctoHeading).toBeTruthy();
+
+    const allElements = Array.from(el.querySelectorAll('h2, p')) as HTMLElement[];
+    const h2Index = allElements.indexOf(ctoHeading!);
+    const nameParagraph = allElements.find(
+      (elem, idx) => idx > h2Index && elem.textContent?.trim() === FOUNDER_DATA.name
+    );
+    expect(nameParagraph).toBeTruthy();
+  });
+
+  // 11.7 — Team card description paragraph and expertise badges are still present
+  it('should render founder summary text', () => {
+    const fixture = createFixture();
+    expect(fixture.nativeElement.textContent).toContain(FOUNDER_DATA.summary);
+  });
+
+  it('should render at least one skill category label', () => {
+    const fixture = createFixture();
+    expect(fixture.nativeElement.textContent).toContain('Languages');
+  });
+
+  // 11.8 — Team Philosophy text is present in the DOM
+  it('should render Team Philosophy text', () => {
+    const fixture = createFixture();
+    expect(fixture.nativeElement.textContent).toContain(
+      'We believe great products come from collaboration'
+    );
+  });
+
+  // 11.9 — Exactly four achievement stat cards render with labels
+  it('should have exactly four achievements', () => {
+    const fixture = createFixture();
+    expect(fixture.componentInstance.achievements.length).toBe(4);
+  });
+
+  it('should render all four achievement labels', () => {
+    const fixture = createFixture();
+    const text: string = fixture.nativeElement.textContent;
+    expect(text).toContain('Projects Delivered');
+    expect(text).toContain('Technologies Used');
+    expect(text).toContain('Happy Clients');
+    expect(text).toContain('Years of Experience');
+  });
+
+  // 11.10 — CTA heading text and /contact routerLink are present
+  it('should render CTA heading text', () => {
+    const fixture = createFixture();
+    expect(fixture.nativeElement.textContent).toContain(
+      "Have an idea? Let's build it together."
+    );
+  });
+
+  it('should have an anchor with routerLink="/contact"', () => {
+    const fixture = createFixture();
+    const anchor: HTMLAnchorElement | null =
+      fixture.nativeElement.querySelector('a[routerLink="/contact"]');
+    expect(anchor).toBeTruthy();
+  });
+});

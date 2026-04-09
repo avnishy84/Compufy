@@ -1,240 +1,195 @@
+// Feature: who-we-are-enhancement, Property 1: Every core value card has an icon host element alongside the label
+// Feature: who-we-are-enhancement, Property 2: Every achievement stat card has both a non-empty value and a non-empty label
+
 import * as fc from 'fast-check';
 import { TestBed } from '@angular/core/testing';
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import {
-  FounderProfile,
-  SkillCategory,
-  ExperienceEntry,
-  EducationEntry,
-} from '../../data/models/founder.model';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { LucideAngularModule, Lightbulb, LucideIconData } from 'lucide-angular';
 
 // ---------------------------------------------------------------------------
-// Test harness component — mirrors WhoWeAreComponent template structure but
-// with a mutable `founder` property so arbitrary data can be injected.
-// Uses Default change detection to ensure re-renders on property assignment.
+// Inline interfaces (mirrors the component's private interfaces)
+// ---------------------------------------------------------------------------
+interface CoreValue {
+  label: string;
+  icon: LucideIconData;
+}
+
+interface AchievementStat {
+  value: string;
+  label: string;
+}
+
+// ---------------------------------------------------------------------------
+// Test harness: Core Values grid
+// Mirrors the @for block from WhoWeAreComponent for the Core Values section.
+// Uses Default CD so Input() changes trigger re-renders.
 // ---------------------------------------------------------------------------
 @Component({
-  selector: 'app-who-we-are-pbt-harness',
+  selector: 'app-core-values-harness',
   standalone: true,
-  imports: [],
+  imports: [LucideAngularModule],
   changeDetection: ChangeDetectionStrategy.Default,
   template: `
-    <div>
-      <!-- Hero fields -->
-      <span class="founder-name">{{ founder.name }}</span>
-      <span class="founder-title">{{ founder.title }}</span>
-      <span class="founder-location">{{ founder.location }}</span>
-      <span class="founder-role">{{ founder.role }}</span>
-      <span class="founder-summary">{{ founder.summary }}</span>
-
-      <!-- Skills -->
-      @for (category of founder.skillCategories; track category.label) {
-        <div class="skill-category">
-          <span class="category-label">{{ category.label }}</span>
-          @for (skill of category.skills; track skill) {
-            <span class="skill-item">{{ skill }}</span>
-          }
+    <div class="core-values-grid">
+      @for (value of coreValues; track value.label) {
+        <div class="core-value-card">
+          <div class="icon-wrapper">
+            <lucide-icon [img]="value.icon" [size]="20" class="value-icon"></lucide-icon>
+          </div>
+          <p class="value-label">{{ value.label }}</p>
         </div>
-      } @empty {
-        <p>No skills listed.</p>
-      }
-
-      <!-- Experience -->
-      @for (entry of founder.experience; track entry.company + entry.dateRange) {
-        <div class="exp-entry" [attr.data-company]="entry.company">
-          {{ entry.company }}
-          <span class="exp-title">{{ entry.title }}</span>
-          <span class="exp-location">{{ entry.location }}</span>
-          <span class="exp-date-range">{{ entry.dateRange }}</span>
-          @for (highlight of entry.highlights; track highlight) {
-            <span class="exp-highlight">{{ highlight }}</span>
-          }
-        </div>
-      } @empty {
-        <p>No experience entries listed.</p>
-      }
-
-      <!-- Education -->
-      @for (entry of founder.education; track entry.degree + entry.yearRange) {
-        <div class="edu-entry" [attr.data-degree]="entry.degree">
-          {{ entry.degree }}
-          <span class="edu-institution">{{ entry.institution }}</span>
-          <span class="edu-year-range">{{ entry.yearRange }}</span>
-          <span class="edu-score">{{ entry.score }}</span>
-        </div>
-      } @empty {
-        <p>No education entries listed.</p>
       }
     </div>
   `,
 })
-class WhoWeArePbtHarnessComponent {
-  founder: FounderProfile = {
-    name: '',
-    title: '',
-    location: '',
-    summary: '',
-    role: '',
-    skillCategories: [],
-    experience: [],
-    education: [],
-  };
+class CoreValuesHarnessComponent {
+  @Input() coreValues: CoreValue[] = [];
 }
 
 // ---------------------------------------------------------------------------
-// Arbitraries
+// Test harness: Achievements grid
+// Mirrors the @for block from WhoWeAreComponent for the Achievements section.
 // ---------------------------------------------------------------------------
-const skillCategoryArb: fc.Arbitrary<SkillCategory> = fc.record({
-  label: fc.string({ minLength: 1 }),
-  skills: fc.array(fc.string({ minLength: 1 }), { minLength: 1 }),
-});
-
-const experienceEntryArb: fc.Arbitrary<ExperienceEntry> = fc.record({
-  company: fc.string({ minLength: 1 }),
-  title: fc.string({ minLength: 1 }),
-  location: fc.string({ minLength: 1 }),
-  dateRange: fc.string({ minLength: 1 }),
-  highlights: fc.array(fc.string({ minLength: 1 })),
-});
-
-const educationEntryArb: fc.Arbitrary<EducationEntry> = fc.record({
-  degree: fc.string({ minLength: 1 }),
-  institution: fc.string({ minLength: 1 }),
-  yearRange: fc.string({ minLength: 1 }),
-  score: fc.string({ minLength: 1 }),
-});
-
-const founderProfileArb: fc.Arbitrary<FounderProfile> = fc.record({
-  name: fc.string({ minLength: 1 }),
-  title: fc.string({ minLength: 1 }),
-  location: fc.string({ minLength: 1 }),
-  summary: fc.string({ minLength: 1 }),
-  role: fc.string({ minLength: 1 }),
-  skillCategories: fc.array(skillCategoryArb),
-  experience: fc.array(experienceEntryArb),
-  education: fc.array(educationEntryArb),
-});
+@Component({
+  selector: 'app-achievements-harness',
+  standalone: true,
+  imports: [],
+  changeDetection: ChangeDetectionStrategy.Default,
+  template: `
+    <div class="achievements-grid">
+      @for (stat of achievements; track stat.label) {
+        <div class="stat-card">
+          <p class="stat-value">{{ stat.value }}</p>
+          <p class="stat-label">{{ stat.label }}</p>
+        </div>
+      }
+    </div>
+  `,
+})
+class AchievementsHarnessComponent {
+  @Input() achievements: AchievementStat[] = [];
+}
 
 // ---------------------------------------------------------------------------
-// Tests
+// Property 1: Every core value card has an icon host element alongside the label
+// Validates: Requirements 3.3
 // ---------------------------------------------------------------------------
-describe('WhoWeAreComponent PBT', () => {
+describe('PBT – P1: Every core value card has an icon host element alongside the label', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [WhoWeArePbtHarnessComponent],
+      imports: [CoreValuesHarnessComponent],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   });
 
-  // Feature: who-we-are-page, Property 1: All profile and section fields are rendered
-  describe('P1: All profile and section fields are rendered', () => {
-    it('for any FounderProfile, all header/experience/education fields appear in the DOM', () => {
-      // Feature: who-we-are-page, Property 1: All profile and section fields are rendered
-      // Validates: Requirements 2.1, 2.2, 2.3, 2.4, 2.5, 4.1, 4.2, 5.1
-      expect(() =>
-        fc.assert(
-          fc.property(founderProfileArb, (profile) => {
-            const fixture = TestBed.createComponent(WhoWeArePbtHarnessComponent);
-            fixture.componentInstance.founder = profile;
-            fixture.detectChanges();
-
-            const text: string = fixture.nativeElement.textContent ?? '';
-
-            // Hero fields
-            if (!text.includes(profile.name)) return false;
-            if (!text.includes(profile.title)) return false;
-            if (!text.includes(profile.location)) return false;
-            if (!text.includes(profile.summary)) return false;
-            if (!text.includes(profile.role)) return false;
-
-            // Experience entry fields
-            for (const entry of profile.experience) {
-              if (!text.includes(entry.company)) return false;
-              if (!text.includes(entry.title)) return false;
-              if (!text.includes(entry.location)) return false;
-              if (!text.includes(entry.dateRange)) return false;
-            }
-
-            // Education entry fields
-            for (const entry of profile.education) {
-              if (!text.includes(entry.degree)) return false;
-              if (!text.includes(entry.institution)) return false;
-              if (!text.includes(entry.yearRange)) return false;
-              if (!text.includes(entry.score)) return false;
-            }
-
-            return true;
+  it('for any array of CoreValue-shaped objects, each rendered card contains a lucide-icon alongside the label', () => {
+    fc.assert(
+      fc.property(
+        fc.array(
+          fc.record({
+            label: fc.string({ minLength: 1, maxLength: 40 }),
+            icon: fc.constant(Lightbulb as LucideIconData),
           }),
-          { numRuns: 100 }
-        )
-      ).not.toThrow();
-    });
+          { minLength: 0, maxLength: 10 }
+        ),
+        (coreValues) => {
+          const fixture = TestBed.createComponent(CoreValuesHarnessComponent);
+          fixture.componentInstance.coreValues = coreValues;
+          fixture.detectChanges();
+
+          const el: HTMLElement = fixture.nativeElement;
+          const cards = Array.from(el.querySelectorAll('.core-value-card'));
+
+          // Number of rendered cards must equal the input array length
+          expect(cards.length).toBe(coreValues.length);
+
+          // Each card must contain both a lucide-icon host and a label element
+          for (let i = 0; i < cards.length; i++) {
+            const card = cards[i];
+            const iconHost = card.querySelector('lucide-icon');
+            const labelEl = card.querySelector('.value-label');
+
+            expect(iconHost).withContext(`card[${i}] (label="${coreValues[i].label}") should have a lucide-icon`).toBeTruthy();
+            expect(labelEl).withContext(`card[${i}] should have a .value-label element`).toBeTruthy();
+            expect(labelEl?.textContent?.trim())
+              .withContext(`card[${i}] label text should match input`)
+              .toBe(coreValues[i].label);
+          }
+
+          fixture.destroy();
+        }
+      ),
+      { numRuns: 100 }
+    );
+    expect(true).toBeTrue();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Property 2: Every achievement stat card has both a non-empty value and a non-empty label
+// Validates: Requirements 8.3
+// ---------------------------------------------------------------------------
+describe('PBT – P2: Every achievement stat card has both a non-empty value and a non-empty label', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [AchievementsHarnessComponent],
+    }).compileComponents();
   });
 
-  // Feature: who-we-are-page, Property 2: All skills are rendered without omission
-  describe('P2: All skills are rendered without omission', () => {
-    it('for any FounderProfile, every skill in every skill category appears in the DOM', () => {
-      // Feature: who-we-are-page, Property 2: All skills are rendered without omission
-      // Validates: Requirements 3.1, 3.2, 3.3
-      expect(() =>
-        fc.assert(
-          fc.property(founderProfileArb, (profile) => {
-            const fixture = TestBed.createComponent(WhoWeArePbtHarnessComponent);
-            fixture.componentInstance.founder = profile;
-            fixture.detectChanges();
-
-            const text: string = fixture.nativeElement.textContent ?? '';
-
-            for (const category of profile.skillCategories) {
-              for (const skill of category.skills) {
-                if (!text.includes(skill)) return false;
-              }
-            }
-
-            return true;
+  it('for any array of AchievementStat-shaped objects, each rendered stat card contains both a non-empty value and a non-empty label', () => {
+    fc.assert(
+      fc.property(
+        fc.array(
+          fc.record({
+            value: fc.string({ minLength: 1, maxLength: 20 }),
+            label: fc.string({ minLength: 1, maxLength: 40 }),
           }),
-          { numRuns: 100 }
-        )
-      ).not.toThrow();
-    });
-  });
+          { minLength: 0, maxLength: 10 }
+        ),
+        (achievements) => {
+          const fixture = TestBed.createComponent(AchievementsHarnessComponent);
+          fixture.componentInstance.achievements = achievements;
+          fixture.detectChanges();
 
-  // Feature: who-we-are-page, Property 3: Section ordering matches data array order
-  describe('P3: Section ordering matches data array order', () => {
-    it('for any FounderProfile, DOM order of experience and education entries matches data order', () => {
-      // Feature: who-we-are-page, Property 3: Section ordering matches data array order
-      // Validates: Requirements 4.3, 5.2
-      expect(() =>
-        fc.assert(
-          fc.property(founderProfileArb, (profile) => {
-            const fixture = TestBed.createComponent(WhoWeArePbtHarnessComponent);
-            fixture.componentInstance.founder = profile;
-            fixture.detectChanges();
+          const el: HTMLElement = fixture.nativeElement;
+          const cards = Array.from(el.querySelectorAll('.stat-card'));
 
-            const nativeEl: HTMLElement = fixture.nativeElement;
+          // Number of rendered cards must equal the input array length
+          expect(cards.length).toBe(achievements.length);
 
-            // Check experience order via data-company attributes
-            const expEls = nativeEl.querySelectorAll('.exp-entry');
-            const domExpCompanies = Array.from(expEls).map(el => el.getAttribute('data-company'));
-            const dataExpCompanies = profile.experience.map(e => e.company);
-            if (domExpCompanies.length !== dataExpCompanies.length) return false;
-            for (let i = 0; i < dataExpCompanies.length; i++) {
-              if (domExpCompanies[i] !== dataExpCompanies[i]) return false;
-            }
+          // Each card must contain both a non-empty value and a non-empty label
+          for (let i = 0; i < cards.length; i++) {
+            const card = cards[i];
+            const valueEl = card.querySelector('.stat-value');
+            const labelEl = card.querySelector('.stat-label');
 
-            // Check education order via data-degree attributes
-            const eduEls = nativeEl.querySelectorAll('.edu-entry');
-            const domEduDegrees = Array.from(eduEls).map(el => el.getAttribute('data-degree'));
-            const dataEduDegrees = profile.education.map(e => e.degree);
-            if (domEduDegrees.length !== dataEduDegrees.length) return false;
-            for (let i = 0; i < dataEduDegrees.length; i++) {
-              if (domEduDegrees[i] !== dataEduDegrees[i]) return false;
-            }
+            expect(valueEl).withContext(`stat-card[${i}] should have a .stat-value element`).toBeTruthy();
+            expect(labelEl).withContext(`stat-card[${i}] should have a .stat-label element`).toBeTruthy();
 
-            return true;
-          }),
-          { numRuns: 100 }
-        )
-      ).not.toThrow();
-    });
+            const renderedValue = valueEl?.textContent?.trim() ?? '';
+            const renderedLabel = labelEl?.textContent?.trim() ?? '';
+
+            expect(renderedValue.length)
+              .withContext(`stat-card[${i}] value should be non-empty`)
+              .toBeGreaterThan(0);
+            expect(renderedLabel.length)
+              .withContext(`stat-card[${i}] label should be non-empty`)
+              .toBeGreaterThan(0);
+
+            expect(renderedValue)
+              .withContext(`stat-card[${i}] value text should match input`)
+              .toBe(achievements[i].value);
+            expect(renderedLabel)
+              .withContext(`stat-card[${i}] label text should match input`)
+              .toBe(achievements[i].label);
+          }
+
+          fixture.destroy();
+        }
+      ),
+      { numRuns: 100 }
+    );
+    expect(true).toBeTrue();
   });
 });
