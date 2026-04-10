@@ -307,6 +307,86 @@ Next.js API Routes
     liveDemoAvailable: true,
     liveDemoUrl: 'https://vishwakarma-carpenter.web.app',
   },
+  {
+    id: '5',
+    slug: 'one-notepad',
+    name: 'One Notepad',
+    industry: 'Productivity / SaaS',
+    tagline: 'A vanilla JS, Firebase-hosted web-based note-taking app with rich text editing, cloud sync, dark mode, and a built-in Snake game.',
+    initials: 'ON',
+    logoUrl: '/one-note-svg.svg',
+    overview: `One Notepad is a zero-framework, cloud-synced note-taking web app built entirely with vanilla JavaScript, HTML5, and CSS3. Notes are stored in Firebase Firestore per user, with a debounced auto-save system that serialises writes to prevent concurrent conflicts. The app supports rich text editing via execCommand, custom keyboard shortcuts, dark mode, and a fully playable Snake game embedded as a draggable modal.`,
+    quote: `"No build step, no bundler, no framework. Static files served directly — edit and refresh."`,
+    featureGroups: [
+      {
+        heading: 'Core Features',
+        items: [
+          { name: 'Rich Text Editor', description: 'Bold, italic, underline, strikethrough, headings, lists, blockquote, code blocks, and font size/color via execCommand.' },
+          { name: 'Cloud Sync', description: 'Notes saved to Firestore per user with debounced 800ms auto-save and serialised write guard.' },
+          { name: 'Multi-Note Management', description: 'Create, switch, rename, and delete notes from a slide-in side panel.' },
+          { name: 'Custom Shortcuts', description: 'User-defined Ctrl+Alt+[key] shortcuts persisted in localStorage.' },
+          { name: 'Export', description: 'Download current note as an .html file or export all Firestore data as JSON.' },
+        ],
+      },
+      {
+        heading: 'UX & Extras',
+        items: [
+          { name: 'Dark Mode', description: 'Pre-render flash prevention via inline script + CSS variables. Persisted in localStorage.' },
+          { name: 'Snake Game', description: 'Full canvas-based Snake game in a draggable modal — power-ups, particles, difficulty levels, wall wrap-around.' },
+          { name: 'Settings Page', description: 'Font family, font size, auto-save, spell check, and theme preferences.' },
+          { name: 'Contact Form', description: 'Saves to Firestore users/{uid}/contact with server timestamp.' },
+        ],
+      },
+    ],
+    techStackGroups: [
+      {
+        heading: 'Frontend',
+        items: [
+          { name: 'Vanilla JS (ES6 modules)', description: 'No framework, no bundler — static files served directly.' },
+          { name: 'HTML5 + CSS3', description: 'CSS custom properties for full light/dark theming.' },
+          { name: 'Font Awesome 6.4.0', description: 'Icon set loaded via CDN.' },
+          { name: 'Inter (Google Fonts)', description: 'Primary UI typeface.' },
+        ],
+      },
+      {
+        heading: 'Backend & Infrastructure',
+        items: [
+          { name: 'Firebase Auth', description: 'Email/password + Google OAuth.' },
+          { name: 'Firebase Firestore', description: 'NoSQL real-time database — notes stored at users/{uid}/notes.' },
+          { name: 'Firebase Hosting', description: 'Static hosting with SPA rewrites.' },
+        ],
+      },
+    ],
+    techTags: ['Vanilla JS', 'Firebase Auth', 'Firestore', 'Firebase Hosting', 'HTML5', 'CSS3', 'Canvas API'],
+    architecture: `DOMContentLoaded
+└── new App()
+    ├── new Auth()       ← Firebase init, onAuthStateChanged
+    ├── new Header()     ← Side panel, dark mode, hamburger
+    ├── new Footer()     ← Word/char count
+    ├── new Toolbar()    ← execCommand formatting, shortcuts
+    ├── new Game()       ← Snake game modal
+    ├── new Editor()     ← Note CRUD, Firestore save/load
+    ├── new About()      ← FAQ, contact form
+    └── new Settings()   ← User preferences, export, delete account
+
+Cross-component communication via window.* globals:
+  window.editor, window.header, window.toolbar,
+  window.auth, window.firebaseAuth, window.db`,
+    architectureNotes: [
+      { heading: 'Zero build step', body: 'No webpack, no Vite, no TypeScript compiler. Edit files and refresh — served as-is from public/.' },
+      { heading: 'Debounced serialised save', body: '800ms debounce after keystroke. If a save is already in progress (_saving flag), the next save is re-queued rather than dropped.' },
+      { heading: 'window.* globals', body: 'All components expose themselves to window via exposeToGlobal() — the only cross-component communication mechanism.' },
+      { heading: 'Separate HTML pages', body: 'index.html, about.html, settings.html are distinct files. Firebase rewrites all routes to index.html but page detection uses pathname checks.' },
+    ],
+    differentiators: [
+      { heading: 'No Framework Overhead', body: 'Pure vanilla JS with ES6 modules. Zero dependencies in the browser — no React, no Angular, no Vue. Loads instantly.' },
+      { heading: 'Serialised Write Guard', body: 'The save system uses a _saving flag to serialise concurrent Firestore writes — preventing data races without any external state management library.' },
+      { heading: 'Built-in Snake Game', body: 'A fully featured canvas Snake game with power-ups, particles, difficulty levels, and wall wrap-around — embedded as a draggable modal on every page.' },
+      { heading: 'Flash-Free Dark Mode', body: 'An inline script in <head> applies the dark class before CSS loads, eliminating the white flash on page load that most dark mode implementations suffer from.' },
+    ],
+    liveDemoAvailable: true,
+    liveDemoUrl: 'https://notepad-2-e34b1.web.app',
+  },
 ];
 
 export const CLIENT_PROJECTS_BY_SLUG: Map<string, ClientProject> = new Map(
