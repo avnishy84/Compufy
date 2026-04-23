@@ -5,6 +5,7 @@ import { StatsSectionComponent } from './stats-section/stats-section.component';
 import { HowWeWorkSectionComponent } from './how-we-work-section/how-we-work-section.component';
 import { CtaSectionComponent } from './cta-section/cta-section.component';
 import { AiTeaserSectionComponent } from './ai-teaser-section/ai-teaser-section.component';
+import { PartnersSectionComponent } from './partners-section/partners-section.component';
 import { CaseStudiesSectionComponent } from '../case-studies/case-studies-section/case-studies-section.component';
 
 @Component({
@@ -17,6 +18,7 @@ import { CaseStudiesSectionComponent } from '../case-studies/case-studies-sectio
     AiTeaserSectionComponent,
     HowWeWorkSectionComponent,
     CaseStudiesSectionComponent,
+    PartnersSectionComponent,
     CtaSectionComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,6 +30,7 @@ import { CaseStudiesSectionComponent } from '../case-studies/case-studies-sectio
       <app-ai-teaser-section />
       <app-how-we-work-section />
       <app-case-studies-section />
+      <app-partners-section />
       <app-cta-section />
     </main>
   `,
