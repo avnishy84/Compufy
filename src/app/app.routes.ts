@@ -69,6 +69,11 @@ export const routes: Routes = [
       import('./features/demo-unavailable/demo-unavailable.component').then(m => m.DemoUnavailableComponent),
   },
   {
+    path: '404-game',
+    loadComponent: () =>
+      import('./features/not-found/not-found.component').then(m => m.NotFoundComponent),
+  },
+  {
     path: '**',
     loadComponent: () =>
       import('./features/not-found/not-found.component').then(m => m.NotFoundComponent),
