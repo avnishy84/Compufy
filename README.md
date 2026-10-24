@@ -62,7 +62,7 @@ src/
 │   │   ├── contact/            # Contact form with Firebase submission
 │   │   ├── careers/            # Careers page with application form
 │   │   ├── who-we-are/         # Team and company background
-│   │   ├── ai-approach/        # AI methodology overview
+│   │   ├── ai-approach/        # AI methodology overviews
 │   │   ├── coming-soon/        # Placeholder route
 │   │   ├── privacy-policy/     # Legal page
 │   │   ├── terms-of-service/   # Legal page
