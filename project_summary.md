@@ -12,7 +12,7 @@ Compufy Technology is a corporate marketing website for a technology company. It
 -   **SSR Enabled**: Fast initial page loads and improved SEO via Angular Universal.
 -   **Interactive Easter Egg**: A hidden rocket game where users can fly a rocket and "destroy" DOM elements on the page.
 -   **Feature-Rich**: Includes pages for services, contact (with a Firebase-backed form), careers (with an application form), company information, and more.
--   **Responsive Design**: Optimized for desktop, tablet, and mobile devices.
+-   **Responsive Design**: Optimized for desktops, tablet, and mobile devices.
 
 ## 2. Tech Stack
 
