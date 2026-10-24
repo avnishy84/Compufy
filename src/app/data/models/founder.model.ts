@@ -24,6 +24,7 @@ export interface FounderProfile {
   location: string;
   summary: string;
   role: string;            // e.g. "Founder, Compufy Technology"
+  linkedInUrl?: string;    // optional public LinkedIn profile URL
   skillCategories: SkillCategory[];
   experience: ExperienceEntry[];   // reverse-chronological
   education: EducationEntry[];     // reverse-chronological

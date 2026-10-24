@@ -21,6 +21,19 @@ interface AchievementStat {
   label: string;
 }
 
+interface TeamMember {
+  title: string;        // role title (card heading)
+  name: string;
+  badge: string;        // short badge label, e.g. "VP"
+  initial: string;      // avatar letter
+  summary: string;
+  tags: string[];
+  // Tailwind class fragments for this member's unique accent color
+  avatarClass: string;  // border + bg + text for avatar circle
+  badgeClass: string;   // border + bg + text for role badge
+  tagClass: string;     // border + bg + text for tag pills
+}
+
 @Component({
   selector: 'app-who-we-are',
   standalone: true,
@@ -200,7 +213,22 @@ interface AchievementStat {
 
               <!-- Info -->
               <div class="flex-1 text-center lg:text-left">
-                <h2 class="mb-1 text-2xl font-extrabold text-white sm:text-3xl">{{ founder.title }}</h2>
+                <div class="mb-1 flex items-center justify-center gap-3 lg:justify-start">
+                  <h2 class="text-2xl font-extrabold text-white sm:text-3xl">{{ founder.title }}</h2>
+                  @if (founder.linkedInUrl) {
+                    <a
+                      [href]="founder.linkedInUrl"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      [attr.aria-label]="founder.name + ' on LinkedIn'"
+                      class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-slate-300 transition-all duration-150 hover:border-white/20 hover:text-white"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/>
+                      </svg>
+                    </a>
+                  }
+                </div>
                 <p class="mb-4 text-base font-medium text-slate-400">{{ founder.name }}</p>
                 <p class="mb-6 max-w-2xl leading-relaxed text-slate-300">{{ founder.summary }}</p>
 
@@ -216,6 +244,55 @@ interface AchievementStat {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        <!-- ── Additional Team Members ── -->
+        @for (member of teamMembers; track member.name) {
+          <section class="mb-20">
+            <div class="rounded-2xl border border-white/10 bg-surface-card p-8 transition-all duration-150 hover:border-white/20 sm:p-12">
+              <div class="flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-16">
+
+                <!-- Avatar -->
+                <div class="flex shrink-0 justify-center lg:justify-start">
+                  <div class="relative">
+                    <div class="flex h-28 w-28 items-center justify-center rounded-full border-2 text-4xl font-extrabold sm:h-36 sm:w-36 sm:text-5xl" [class]="member.avatarClass">
+                      {{ member.initial }}
+                    </div>
+                    <span class="absolute -bottom-2 -right-2 rounded-full border px-2.5 py-0.5 text-xs font-semibold" [class]="member.badgeClass">
+                      {{ member.badge }}
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Info -->
+                <div class="flex-1 text-center lg:text-left">
+                  <h2 class="mb-1 text-2xl font-extrabold text-white sm:text-3xl">{{ member.title }}</h2>
+                  <p class="mb-4 text-base font-medium text-slate-400">{{ member.name }}</p>
+                  <p class="mb-6 max-w-2xl leading-relaxed text-slate-300">{{ member.summary }}</p>
+
+                  <!-- Expertise badges -->
+                  <div class="flex flex-wrap justify-center gap-2 lg:justify-start">
+                    @for (tag of member.tags; track tag) {
+                      <span class="rounded-full border px-3 py-1 text-sm font-medium" [class]="member.tagClass">
+                        {{ tag }}
+                      </span>
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        }
+
+        <!-- ── The Team With Us ── -->
+        <section class="mb-20">
+          <div class="mx-auto max-w-[700px] rounded-2xl border border-white/5 bg-surface-card/50 px-8 py-10 text-center">
+            <div class="mx-auto mb-5 h-px w-16 rounded-full bg-gradient-to-r from-brand-secondary to-brand-accent"></div>
+            <h3 class="mb-3 text-sm font-semibold uppercase tracking-widest text-slate-300">The Team With Us</h3>
+            <p class="leading-relaxed text-slate-400">
+              Behind every delivery is a dedicated group of engineers, designers, testers and support specialists who work quietly behind the scenes. Their craft, care and consistency power the growth of Compufy's partners, one successful project at a time.
+            </p>
           </div>
         </section>
 
@@ -341,6 +418,58 @@ export class WhoWeAreComponent {
     { value: '30+', label: 'Technologies Used'   },
     { value: '40+', label: 'Happy Clients'       },
     { value: '5+',  label: 'Years of Experience' },
+  ];
+
+  readonly teamMembers: TeamMember[] = [
+    {
+      title: 'Senior Project Manager & Vice President',
+      name: 'David Grace',
+      badge: 'VP',
+      initial: 'D',
+      summary:
+        'David Grace is Senior Project Manager and Vice President of the firm, with excellent experience ' +
+        'across both software development and project management. He bridges delivery and engineering, ' +
+        'keeping projects on scope, on schedule, and tightly aligned with client goals.',
+      tags: [
+        'Project Management',
+        'Delivery Leadership',
+        'Software Development',
+        'Agile Delivery',
+        'Risk & Scope Management',
+        'Team Coordination',
+      ],
+      avatarClass: 'border-emerald-400/40 bg-emerald-400/10 text-emerald-400',
+      badgeClass: 'border-emerald-400/30 bg-emerald-400/10 text-emerald-400',
+      tagClass: 'border-emerald-400/20 bg-emerald-400/10 text-emerald-400',
+    },
+    {
+      title: 'AI & AI Agents Expert',
+      name: 'Stephen Durnin',
+      badge: 'AI',
+      initial: 'S',
+      summary:
+        'Stephen Durnin specializes in AI and AI agents, designing, building, and deploying intelligent, ' +
+        'agent-driven solutions. He automates complex workflows and brings practical, production-ready AI ' +
+        'into client products.',
+      tags: ['AI Agents', 'Agentic Workflows', 'LLM Applications', 'AI Strategy', 'Automation'],
+      avatarClass: 'border-amber-400/40 bg-amber-400/10 text-amber-400',
+      badgeClass: 'border-amber-400/30 bg-amber-400/10 text-amber-400',
+      tagClass: 'border-amber-400/20 bg-amber-400/10 text-amber-400',
+    },
+    {
+      title: 'Training & Emerging Technology Lead',
+      name: 'Anton Martyniuk',
+      badge: 'Training',
+      initial: 'A',
+      summary:
+        'Anton Martyniuk is a Software Architect and Microsoft MVP, and the founder of AntonDevTips — a ' +
+        'platform that helps .NET developers reach Senior and Architect level. He leads training and ' +
+        'emerging-technology management so the team and clients stay ahead on .NET and new technology.',
+      tags: ['.NET', 'Software Architecture', 'Developer Training', 'Emerging Tech', 'Microsoft MVP'],
+      avatarClass: 'border-rose-400/40 bg-rose-400/10 text-rose-400',
+      badgeClass: 'border-rose-400/30 bg-rose-400/10 text-rose-400',
+      tagClass: 'border-rose-400/20 bg-rose-400/10 text-rose-400',
+    },
   ];
 
   readonly coFounderExpertise = [
