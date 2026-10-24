@@ -2,7 +2,7 @@ import { FounderProfile } from '../models/founder.model';
 
 export const FOUNDER_DATA: FounderProfile = {
   name: 'Avnish Yadav',
-  title: 'Chief Technology Officer',
+  title: 'Strategic Advisor & CTO',
   location: 'India',
   role: 'CTO, Compufy Technology',
   summary:

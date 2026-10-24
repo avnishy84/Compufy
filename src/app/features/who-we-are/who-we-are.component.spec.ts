@@ -261,7 +261,7 @@ describe('who-we-are-enhancement', () => {
     const fixture = createFixture();
     const el: HTMLElement = fixture.nativeElement;
     const headings = Array.from(el.querySelectorAll('h2')) as HTMLElement[];
-    const ctoHeading = headings.find(h => h.textContent?.includes('Chief Technology Officer'));
+    const ctoHeading = headings.find(h => h.textContent?.includes('Strategic Advisor & CTO'));
     expect(ctoHeading).toBeTruthy();
 
     const allElements = Array.from(el.querySelectorAll('h2, p')) as HTMLElement[];

@@ -87,7 +87,7 @@ This feature enhances the existing "Who We Are" page for Compufy Technology. The
 
 #### Acceptance Criteria
 
-1. THE Team_Card SHALL render the member's designation (e.g., "Chief Technology Officer") as the primary bold heading.
+1. THE Team_Card SHALL render the member's designation (e.g., "Strategic Advisor & CTO") as the primary bold heading.
 2. THE Team_Card SHALL render the member's name as secondary, visually subdued text below the designation.
 3. THE Team_Card SHALL retain the existing description paragraph and expertise badge elements.
 4. WHEN a visitor hovers over a Team_Card, THE card SHALL apply a subtle visual hover effect within 150ms.
