@@ -17,6 +17,24 @@ const DT_CAP = 0.05;
 
 export { HALF_SIZE, DT_CAP, FIRE_RATE_MS, MAX_BULLETS };
 
+/** Clamps the rocket position to remain within the canvas bounds. */
+export function clampRocket(
+  x: number,
+  y: number,
+  width: number,
+  height: number
+): { x: number; y: number } {
+  return {
+    x: Math.max(HALF_SIZE, Math.min(width  - HALF_SIZE, x)),
+    y: Math.max(HALF_SIZE, Math.min(height - HALF_SIZE, y)),
+  };
+}
+
+/** Caps a raw delta-time value to DT_CAP to prevent spiral-of-death. */
+export function capDeltaTime(rawDt: number): number {
+  return Math.min(rawDt, DT_CAP);
+}
+
 export interface GameCallbacks {
   onTargetDestroyed?: (destroyedCount: number) => void;
   onAllDestroyed?: () => void;
@@ -95,7 +113,7 @@ export class GameEngine {
     if (!this.state || !this.ctx || !this.canvas || !this.inputHandler) return;
 
     const rawDt = (now - this.lastTime) / 1000;
-    const dt = Math.min(rawDt, DT_CAP);
+    const dt = capDeltaTime(rawDt);
     this.lastTime = now;
 
     const input = this.inputHandler.getState();
@@ -122,7 +140,7 @@ export class GameEngine {
     }
 
     // Boundary clamping — horizontal stays hard-clamped
-    rocket.x = Math.max(HALF_SIZE, Math.min(this.canvas.width - HALF_SIZE, rocket.x));
+    rocket.x = clampRocket(rocket.x, rocket.y, this.canvas.width, this.canvas.height).x;
 
     // Vertical: auto-scroll the page when rocket reaches top/bottom edge zone
     const SCROLL_ZONE = 60; // px from edge that triggers scrolling

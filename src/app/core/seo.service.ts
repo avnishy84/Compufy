@@ -3,26 +3,18 @@ import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { Meta, Title } from '@angular/platform-browser';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
+import { SeoConfig } from '../data/models/seo.model';
 
-export interface SeoConfig {
-  title: string;
-  description: string;
-  keywords?: string;
-  canonical?: string;
-  ogTitle?: string;
-  ogDescription?: string;
-  schema?: object;
-}
-
-const BASE_URL = 'https://compufytech.web.app';
+const SITE_NAME = 'Compufy Technology';
+const BASE_URL  = 'https://compufytech.web.app';
+const DEFAULT_OG_IMAGE = '/og-default.png';
 
 const PAGE_SEO: Record<string, SeoConfig> = {
   '/': {
     title: 'Compufy Technology — Software Company in Kanpur',
     description: 'Top software company in Kanpur, UP. Web, mobile & cloud solutions built to scale. Get a free consultation today.',
-    keywords: 'software company in Kanpur, IT company Kanpur, web development Kanpur, digital solutions Kanpur, tech startup UP',
-    canonical: `${BASE_URL}/`,
-    schema: {
+    canonicalPath: '/',
+    jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'Organization',
       name: 'Compufy Technology',
@@ -45,9 +37,8 @@ const PAGE_SEO: Record<string, SeoConfig> = {
   '/services': {
     title: 'Web & Mobile App Development Services — Kanpur',
     description: 'Custom web, mobile & cloud development services in Kanpur. Angular, React Native & AWS experts. Get a quote today.',
-    keywords: 'web development services Kanpur, mobile app development UP, Angular development, cloud solutions India, custom software Kanpur',
-    canonical: `${BASE_URL}/services`,
-    schema: {
+    canonicalPath: '/services',
+    jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'Service',
       name: 'Software Development Services',
@@ -63,9 +54,8 @@ const PAGE_SEO: Record<string, SeoConfig> = {
   '/who-we-are': {
     title: 'About Compufy Technology — IT Firm in Kanpur',
     description: 'Meet the Kanpur-based team behind Compufy Technology. Engineering modern digital solutions for businesses across India.',
-    keywords: 'IT company Kanpur, tech team Kanpur UP, software engineers Kanpur, startup Kanpur, about us',
-    canonical: `${BASE_URL}/who-we-are`,
-    schema: {
+    canonicalPath: '/who-we-are',
+    jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'AboutPage',
       name: 'About Compufy Technology',
@@ -76,9 +66,8 @@ const PAGE_SEO: Record<string, SeoConfig> = {
   '/contact': {
     title: 'Contact Compufy Technology — Kanpur, UP',
     description: 'Reach Compufy Technology in Kanpur, UP. Get a free project quote for web, mobile or cloud development. We respond within 24h.',
-    keywords: 'hire software developer Kanpur, IT consulting Kanpur, contact tech company UP, get a quote Kanpur',
-    canonical: `${BASE_URL}/contact`,
-    schema: {
+    canonicalPath: '/contact',
+    jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'ContactPage',
       name: 'Contact Compufy Technology',
@@ -88,33 +77,24 @@ const PAGE_SEO: Record<string, SeoConfig> = {
   '/careers': {
     title: 'Careers at Compufy Technology — Kanpur',
     description: 'Join Compufy Technology in Kanpur. Open roles for Angular, cloud & mobile developers. Build great products. Apply today.',
-    keywords: 'software jobs Kanpur, developer jobs UP, tech careers Kanpur, Angular developer jobs, IT jobs Uttar Pradesh',
-    canonical: `${BASE_URL}/careers`,
+    canonicalPath: '/careers',
   },
   '/ai-approach': {
     title: 'AI-Powered Development — Compufy Technology',
     description: "Compufy Technology's AI-first approach to software in Kanpur. Smarter, faster, scalable digital products for modern businesses.",
-    keywords: 'AI development Kanpur, AI consulting India, machine learning solutions UP, AI-powered software Kanpur',
-    canonical: `${BASE_URL}/ai-approach`,
+    canonicalPath: '/ai-approach',
   },
-};
-
-// BreadcrumbList schema per route
-const BREADCRUMBS: Record<string, Array<{ name: string; url: string }>> = {
-  '/services':    [{ name: 'Home', url: BASE_URL }, { name: 'Services', url: `${BASE_URL}/services` }],
-  '/who-we-are':  [{ name: 'Home', url: BASE_URL }, { name: 'Who We Are', url: `${BASE_URL}/who-we-are` }],
-  '/contact':     [{ name: 'Home', url: BASE_URL }, { name: 'Contact', url: `${BASE_URL}/contact` }],
-  '/careers':     [{ name: 'Home', url: BASE_URL }, { name: 'Careers', url: `${BASE_URL}/careers` }],
-  '/ai-approach': [{ name: 'Home', url: BASE_URL }, { name: 'AI Approach', url: `${BASE_URL}/ai-approach` }],
 };
 
 @Injectable({ providedIn: 'root' })
 export class SeoService {
-  private readonly title = inject(Title);
-  private readonly meta = inject(Meta);
-  private readonly router = inject(Router);
-  private readonly doc = inject(DOCUMENT);
+  private readonly titleSvc = inject(Title);
+  private readonly meta     = inject(Meta);
+  private readonly router   = inject(Router);
+  private readonly doc      = inject(DOCUMENT);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+
+  // ── Router-driven init (used by AppComponent) ──────────────────────────────
 
   init(): void {
     this.router.events.pipe(
@@ -122,71 +102,91 @@ export class SeoService {
     ).subscribe((e) => {
       const url = (e as NavigationEnd).urlAfterRedirects.split('?')[0];
       const config = PAGE_SEO[url] ?? PAGE_SEO['/'];
-      this.apply(url, config);
+      this.setPage(config);
     });
   }
 
-  private apply(url: string, config: SeoConfig): void {
-    this.title.setTitle(config.title);
+  // ── Public imperative API (used directly by components & specs) ─────────────
 
+  /**
+   * Apply a full SEO configuration to the current page.
+   * Sets title, meta description, OG tags, Twitter Card tags, canonical link,
+   * robots tag, and optional JSON-LD structured data.
+   */
+  setPage(config: SeoConfig): void {
+    // Title
+    this.titleSvc.setTitle(`${config.title} | ${SITE_NAME}`);
+
+    // Meta description
     this.meta.updateTag({ name: 'description', content: config.description });
-    if (config.keywords) {
-      this.meta.updateTag({ name: 'keywords', content: config.keywords });
+
+    // Robots — remove any previous noindex, then set if needed
+    this.meta.removeTag('name="robots"');
+    if (config.noIndex) {
+      this.meta.addTag({ name: 'robots', content: 'noindex, nofollow' });
     }
 
+    const ogImage = config.ogImage ?? DEFAULT_OG_IMAGE;
+    const ogType  = config.ogType  ?? 'website';
+    const canonicalUrl = `${BASE_URL}${config.canonicalPath}`;
+
     // Open Graph
-    this.meta.updateTag({ property: 'og:title', content: config.ogTitle ?? config.title });
-    this.meta.updateTag({ property: 'og:description', content: config.ogDescription ?? config.description });
-    this.meta.updateTag({ property: 'og:url', content: config.canonical ?? `${BASE_URL}${url}` });
+    this.meta.updateTag({ property: 'og:title',       content: config.title });
+    this.meta.updateTag({ property: 'og:description', content: config.description });
+    this.meta.updateTag({ property: 'og:type',        content: ogType });
+    this.meta.updateTag({ property: 'og:image',       content: ogImage });
+    this.meta.updateTag({ property: 'og:url',         content: canonicalUrl });
+    this.meta.updateTag({ property: 'og:site_name',   content: SITE_NAME });
 
-    // Canonical
-    this.setCanonical(config.canonical ?? `${BASE_URL}${url}`);
+    // Twitter Card
+    this.meta.updateTag({ name: 'twitter:card',        content: 'summary_large_image' });
+    this.meta.updateTag({ name: 'twitter:title',       content: config.title });
+    this.meta.updateTag({ name: 'twitter:description', content: config.description });
+    this.meta.updateTag({ name: 'twitter:image',       content: ogImage });
 
-    // Structured data: page schema + breadcrumb
-    this.setStructuredData(url, config.schema);
+    // Canonical link element
+    this.setCanonical(canonicalUrl);
+
+    // JSON-LD structured data
+    this.setJsonLd(config.jsonLd);
   }
 
+  /**
+   * Set a 404-style page: title with suffix + noindex robots tag.
+   * Clears any JSON-LD and canonical link.
+   */
+  setPageNotFound(label: string): void {
+    this.titleSvc.setTitle(`${label} | ${SITE_NAME}`);
+    this.meta.removeTag('name="robots"');
+    this.meta.addTag({ name: 'robots', content: 'noindex, nofollow' });
+    // Clear canonical & JSON-LD for 404 pages
+    this.doc.getElementById('seo-canonical')?.remove();
+    this.setJsonLd(undefined);
+  }
+
+  // ── Private helpers ─────────────────────────────────────────────────────────
+
   private setCanonical(url: string): void {
-    if (!this.isBrowser) return;
-    let link = this.doc.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    let link = this.doc.getElementById('seo-canonical') as HTMLLinkElement | null;
     if (!link) {
       link = this.doc.createElement('link');
+      link.id = 'seo-canonical';
       link.setAttribute('rel', 'canonical');
       this.doc.head.appendChild(link);
     }
     link.setAttribute('href', url);
   }
 
-  private setStructuredData(url: string, pageSchema?: object): void {
-    if (!this.isBrowser) return;
-    // Remove previous injected schemas
-    this.doc.querySelectorAll('script[data-seo="true"]').forEach(s => s.remove());
+  private setJsonLd(schema: Record<string, unknown> | undefined): void {
+    // Remove any previously injected JSON-LD script
+    this.doc.getElementById('seo-json-ld')?.remove();
 
-    const schemas: object[] = [];
+    if (!schema) return;
 
-    if (pageSchema) schemas.push(pageSchema);
-
-    // BreadcrumbList
-    const crumbs = BREADCRUMBS[url];
-    if (crumbs) {
-      schemas.push({
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: crumbs.map((c, i) => ({
-          '@type': 'ListItem',
-          position: i + 1,
-          name: c.name,
-          item: c.url,
-        })),
-      });
-    }
-
-    schemas.forEach(schema => {
-      const script = this.doc.createElement('script');
-      script.type = 'application/ld+json';
-      script.setAttribute('data-seo', 'true');
-      script.textContent = JSON.stringify(schema);
-      this.doc.head.appendChild(script);
-    });
+    const script = this.doc.createElement('script');
+    script.id   = 'seo-json-ld';
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify(schema);
+    this.doc.head.appendChild(script);
   }
 }

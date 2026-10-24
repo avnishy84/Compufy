@@ -159,7 +159,7 @@ readonly achievements: AchievementStat[] = [
 
 The existing CTO and Founder cards swap the heading/name order:
 
-- **Before**: `<h2>` = title (e.g. "Chief Technology Officer"), `<p>` = name
+- **Before**: `<h2>` = title (e.g. "Strategic Advisor & CTO"), `<p>` = name
 - **After**: `<h2>` = designation (same title), `<p>` = name (subdued, smaller weight)
 
 This is a template-only change; no data model changes are needed.
@@ -223,7 +223,7 @@ Focus on specific content and structural examples. Each test creates the compone
 | Exactly four differentiators | `differentiators.length === 4` and four items in DOM (Req 4.1) |
 | All four differentiator texts present | Each string appears in the DOM (Req 4.2) |
 | Expertise tags section renders five tags | Five chip elements in DOM (Req 5.2) |
-| Team card designation is primary heading | `<h2>` contains "Chief Technology Officer" before the name (Req 6.1, 6.2) |
+| Team card designation is primary heading | `<h2>` contains "Strategic Advisor & CTO" before the name (Req 6.1, 6.2) |
 | Team card retains description and badges | Description paragraph and badge elements still present (Req 6.3) |
 | Team Philosophy text present | DOM contains the philosophy paragraph text (Req 7.2) |
 | Exactly four achievement stat cards | Four stat card elements in DOM (Req 8.1) |

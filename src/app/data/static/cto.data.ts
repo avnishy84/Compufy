@@ -2,16 +2,27 @@ import { FounderProfile } from '../models/founder.model';
 
 export const FOUNDER_DATA: FounderProfile = {
   name: 'Avnish Yadav',
-  title: 'Chief Technology Officer',
+  title: 'Strategic Advisor & CTO',
   location: 'India',
   role: 'CTO, Compufy Technology',
+  linkedInUrl: 'https://www.linkedin.com/in/avnishy84/',
   summary:
     'Avnish Yadav is a full-stack software engineer with extensive experience ' +
     'designing and delivering scalable standalone software, web applications, cloud-native solutions, and ' +
-    'enterprise integrations. As CTO of Compufy Technology, he leads the technical vision and ' +
-    'engineering execution — ensuring every product is built for performance, reliability, and scale.',
+    'enterprise integrations. He also brings deep AI Agents expertise — designing and building AI agents ' +
+    'and agentic workflows, integrating LLMs into products, and driving AI-powered automation. As CTO of ' +
+    'Compufy Technology, he leads the technical vision and engineering execution — ensuring every product ' +
+    'is built for performance, reliability, and scale.',
 
   skillCategories: [
+    {
+      label: 'AI Agents',
+      skills: ['Agent Design', 'Agentic Workflows', 'Automation'],
+    },
+    {
+      label: 'LLM Integration',
+      skills: ['Prompt Engineering', 'RAG', 'LLM APIs'],
+    },
     {
       label: 'Languages',
       skills: ['TypeScript', 'JavaScript', 'Python', 'C#', 'SQL', 'HTML5', 'CSS3'],
