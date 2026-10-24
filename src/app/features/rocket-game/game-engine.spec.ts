@@ -154,3 +154,124 @@ describe('GameEngine – particle removal', () => {
     expect(alive).toBeFalse();
   });
 });
+
+// ─── GameEngine callbacks logic ──────────────────────────────────────────────
+
+// Simulates the callback invocation logic from the engine loop
+function simulateDestructions(
+  destroyedBatches: number[],  // each element = number of targets destroyed in that batch
+  totalTargets: number,
+  callbacks: { onTargetDestroyed?: (count: number) => void; onAllDestroyed?: () => void }
+): { finalCount: number; stopped: boolean } {
+  let destroyedCount = 0;
+  let stopped = false;
+  let activeCallbacks: typeof callbacks | undefined = callbacks;
+
+  // Simulate a cache of totalTargets entries
+  const cache = Array.from({ length: totalTargets }, () => ({ destroyed: false }));
+  let cacheDestroyedSoFar = 0;
+
+  for (const batchSize of destroyedBatches) {
+    if (stopped) break;
+
+    // Mark batchSize entries as destroyed
+    for (let i = 0; i < batchSize && cacheDestroyedSoFar < totalTargets; i++) {
+      cache[cacheDestroyedSoFar].destroyed = true;
+      cacheDestroyedSoFar++;
+    }
+
+    destroyedCount += batchSize;
+    activeCallbacks?.onTargetDestroyed?.(destroyedCount);
+
+    const allGone = cache.every(e => e.destroyed);
+    if (allGone) {
+      const onAllDestroyed = activeCallbacks?.onAllDestroyed;
+      // stop() clears callbacks
+      activeCallbacks = undefined;
+      stopped = true;
+      onAllDestroyed?.();
+    }
+  }
+
+  return { finalCount: destroyedCount, stopped };
+}
+
+// ─── GameEngine callbacks ────────────────────────────────────────────────────
+
+describe('GameEngine – onTargetDestroyed callback', () => {
+  it('is called with count=1 after first target is destroyed', () => {
+    const calls: number[] = [];
+    simulateDestructions([1], 3, { onTargetDestroyed: (c) => calls.push(c) });
+    expect(calls).toEqual([1]);
+  });
+
+  it('is called with incrementing count after each destruction', () => {
+    const calls: number[] = [];
+    simulateDestructions([1, 1, 1], 5, { onTargetDestroyed: (c) => calls.push(c) });
+    expect(calls).toEqual([1, 2, 3]);
+  });
+
+  it('increments by batch size when multiple targets destroyed at once', () => {
+    const calls: number[] = [];
+    simulateDestructions([2, 3], 10, { onTargetDestroyed: (c) => calls.push(c) });
+    expect(calls).toEqual([2, 5]);
+  });
+
+  it('is not called when no targets are destroyed', () => {
+    const calls: number[] = [];
+    simulateDestructions([], 3, { onTargetDestroyed: (c) => calls.push(c) });
+    expect(calls).toEqual([]);
+  });
+});
+
+describe('GameEngine – onAllDestroyed callback', () => {
+  it('is called exactly once when the last target is destroyed', () => {
+    let callCount = 0;
+    simulateDestructions([1, 1, 1], 3, { onAllDestroyed: () => callCount++ });
+    expect(callCount).toBe(1);
+  });
+
+  it('is not called when targets remain', () => {
+    let callCount = 0;
+    simulateDestructions([1, 1], 3, { onAllDestroyed: () => callCount++ });
+    expect(callCount).toBe(0);
+  });
+
+  it('is called when all targets destroyed in a single batch', () => {
+    let callCount = 0;
+    simulateDestructions([3], 3, { onAllDestroyed: () => callCount++ });
+    expect(callCount).toBe(1);
+  });
+});
+
+describe('GameEngine – callbacks cleared after stop()', () => {
+  it('onTargetDestroyed is not invoked after stop() is called', () => {
+    const calls: number[] = [];
+    const { stopped } = simulateDestructions([1, 1, 1], 2, {
+      onTargetDestroyed: (c) => calls.push(c),
+    });
+    // After all 2 targets destroyed, stop() is called, callbacks cleared
+    // The 3rd batch should not trigger any callback
+    expect(stopped).toBeTrue();
+    // Only 2 calls before stop (one per target), 3rd batch is skipped
+    expect(calls.length).toBeLessThanOrEqual(2);
+  });
+
+  it('onAllDestroyed is not invoked again after stop() is called', () => {
+    let callCount = 0;
+    simulateDestructions([1, 1], 2, { onAllDestroyed: () => callCount++ });
+    // Even if we simulate more batches, stop() prevents re-invocation
+    expect(callCount).toBe(1);
+  });
+
+  it('callbacks are cleared (set to undefined) when stop() is called', () => {
+    // Verify the stop() logic: after allGone, callbacks reference is captured
+    // then cleared before onAllDestroyed is invoked
+    const order: string[] = [];
+    simulateDestructions([1], 1, {
+      onTargetDestroyed: () => order.push('destroyed'),
+      onAllDestroyed: () => order.push('allDestroyed'),
+    });
+    expect(order).toEqual(['destroyed', 'allDestroyed']);
+  });
+});

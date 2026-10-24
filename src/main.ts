@@ -1,10 +1,10 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
+import { config } from './app/app.config.browser';
 import { AppComponent } from './app/app.component';
 import { ApplicationRef } from '@angular/core';
 import { first, filter } from 'rxjs';
 
-bootstrapApplication(AppComponent, appConfig)
+bootstrapApplication(AppComponent, config)
   .then((appRef: ApplicationRef) => {
     // Fire GTM only after Angular is fully stable (all async tasks settled)
     appRef.isStable.pipe(
