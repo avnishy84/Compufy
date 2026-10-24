@@ -17,6 +17,29 @@ const DT_CAP = 0.05;
 
 export { HALF_SIZE, DT_CAP, FIRE_RATE_MS, MAX_BULLETS };
 
+/** Clamps the rocket position to remain within the canvas bounds. */
+export function clampRocket(
+  x: number,
+  y: number,
+  width: number,
+  height: number
+): { x: number; y: number } {
+  return {
+    x: Math.max(HALF_SIZE, Math.min(width  - HALF_SIZE, x)),
+    y: Math.max(HALF_SIZE, Math.min(height - HALF_SIZE, y)),
+  };
+}
+
+/** Caps a raw delta-time value to DT_CAP to prevent spiral-of-death. */
+export function capDeltaTime(rawDt: number): number {
+  return Math.min(rawDt, DT_CAP);
+}
+
+export interface GameCallbacks {
+  onTargetDestroyed?: (destroyedCount: number) => void;
+  onAllDestroyed?: () => void;
+}
+
 export class GameEngine {
   private ctx: CanvasRenderingContext2D | null = null;
   private canvas: HTMLCanvasElement | null = null;
@@ -29,6 +52,8 @@ export class GameEngine {
   private lastFireTime = 0;
   private spawnX: number | null = null;
   private spawnY: number | null = null;
+  private destroyedCount = 0;
+  private callbacks: GameCallbacks | undefined;
 
   /** Set rocket spawn position before calling start(). */
   spawnAt(x: number, y: number): void {
@@ -40,12 +65,15 @@ export class GameEngine {
     ctx: CanvasRenderingContext2D,
     canvas: HTMLCanvasElement,
     inputHandler: InputHandler,
-    targetCache: TargetEntry[]
+    targetCache: TargetEntry[],
+    callbacks?: GameCallbacks
   ): void {
     this.ctx = ctx;
     this.canvas = canvas;
     this.inputHandler = inputHandler;
     this.targetCache = targetCache;
+    this.destroyedCount = 0;
+    this.callbacks = callbacks;
 
     const spawnX = this.spawnX ?? canvas.width / 2;
     const spawnY = this.spawnY ?? canvas.height / 2;
@@ -74,6 +102,7 @@ export class GameEngine {
       cancelAnimationFrame(this.rafId);
       this.rafId = null;
     }
+    this.callbacks = undefined;
   }
 
   getState(): GameState | null {
@@ -84,7 +113,7 @@ export class GameEngine {
     if (!this.state || !this.ctx || !this.canvas || !this.inputHandler) return;
 
     const rawDt = (now - this.lastTime) / 1000;
-    const dt = Math.min(rawDt, DT_CAP);
+    const dt = capDeltaTime(rawDt);
     this.lastTime = now;
 
     const input = this.inputHandler.getState();
@@ -111,7 +140,7 @@ export class GameEngine {
     }
 
     // Boundary clamping — horizontal stays hard-clamped
-    rocket.x = Math.max(HALF_SIZE, Math.min(this.canvas.width - HALF_SIZE, rocket.x));
+    rocket.x = clampRocket(rocket.x, rocket.y, this.canvas.width, this.canvas.height).x;
 
     // Vertical: auto-scroll the page when rocket reaches top/bottom edge zone
     const SCROLL_ZONE = 60; // px from edge that triggers scrolling
@@ -212,6 +241,18 @@ export class GameEngine {
         el.style.visibility = 'hidden';
         el.removeEventListener('transitionend', cleanup);
       }, BREAK_FALLBACK_MS);
+    }
+
+    if (result.destroyedIndices.length > 0) {
+      this.destroyedCount += result.destroyedIndices.length;
+      this.callbacks?.onTargetDestroyed?.(this.destroyedCount);
+
+      const allGone = this.targetCache.every(e => e.destroyed);
+      if (allGone) {
+        const onAllDestroyed = this.callbacks?.onAllDestroyed;
+        this.stop();
+        onAllDestroyed?.();
+      }
     }
 
     // --- Render ---

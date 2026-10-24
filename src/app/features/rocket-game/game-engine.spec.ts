@@ -1,22 +1,11 @@
-import { HALF_SIZE, DT_CAP, FIRE_RATE_MS, MAX_BULLETS } from './game-engine';
-
-// ─── Pure helper functions extracted for unit testing ───────────────────────
-
-function clampRocket(
-  x: number,
-  y: number,
-  canvasWidth: number,
-  canvasHeight: number
-): { x: number; y: number } {
-  return {
-    x: Math.max(HALF_SIZE, Math.min(canvasWidth - HALF_SIZE, x)),
-    y: Math.max(HALF_SIZE, Math.min(canvasHeight - HALF_SIZE, y)),
-  };
-}
-
-function capDeltaTime(rawDt: number): number {
-  return Math.min(rawDt, DT_CAP);
-}
+import {
+  HALF_SIZE,
+  DT_CAP,
+  FIRE_RATE_MS,
+  MAX_BULLETS,
+  clampRocket,
+  capDeltaTime,
+} from './game-engine';
 
 // ─── Boundary clamping ───────────────────────────────────────────────────────
 
@@ -94,7 +83,7 @@ describe('GameEngine – bullet creation guards', () => {
     }));
     // Simulate the guard: only create if length < MAX_BULLETS
     const canCreate = bullets.length < MAX_BULLETS;
-    expect(canCreate).toBeFalse();
+    expect(canCreate).toBe(false);
   });
 
   it('allows bullet creation when below capacity', () => {
@@ -102,28 +91,28 @@ describe('GameEngine – bullet creation guards', () => {
       x: 0, y: 0, vx: 0, vy: 0,
     }));
     const canCreate = bullets.length < MAX_BULLETS;
-    expect(canCreate).toBeTrue();
+    expect(canCreate).toBe(true);
   });
 
   it('does not create a bullet when fire-rate limit has not elapsed', () => {
     const now = 1000;
     const lastFireTime = 900; // only 100 ms ago
     const canFire = now - lastFireTime >= FIRE_RATE_MS;
-    expect(canFire).toBeFalse();
+    expect(canFire).toBe(false);
   });
 
   it('allows firing when fire-rate limit has elapsed', () => {
     const now = 1000;
     const lastFireTime = 700; // 300 ms ago
     const canFire = now - lastFireTime >= FIRE_RATE_MS;
-    expect(canFire).toBeTrue();
+    expect(canFire).toBe(true);
   });
 
   it('allows firing exactly at the fire-rate boundary (200 ms)', () => {
     const now = 1000;
     const lastFireTime = 800; // exactly 200 ms ago
     const canFire = now - lastFireTime >= FIRE_RATE_MS;
-    expect(canFire).toBeTrue();
+    expect(canFire).toBe(true);
   });
 });
 
@@ -135,7 +124,7 @@ describe('GameEngine – particle removal', () => {
     const particle = { x: 0, y: 0, vx: 0, vy: 0, born: 500, lifespan: 400 };
     // now - born = 500 >= lifespan 400 → should be removed
     const alive = now - particle.born < particle.lifespan;
-    expect(alive).toBeFalse();
+    expect(alive).toBe(false);
   });
 
   it('keeps a particle alive when lifespan has not elapsed', () => {
@@ -143,7 +132,7 @@ describe('GameEngine – particle removal', () => {
     const particle = { x: 0, y: 0, vx: 0, vy: 0, born: 700, lifespan: 400 };
     // now - born = 300 < lifespan 400 → should stay
     const alive = now - particle.born < particle.lifespan;
-    expect(alive).toBeTrue();
+    expect(alive).toBe(true);
   });
 
   it('removes a particle exactly at lifespan boundary', () => {
@@ -151,6 +140,125 @@ describe('GameEngine – particle removal', () => {
     const particle = { x: 0, y: 0, vx: 0, vy: 0, born: 600, lifespan: 400 };
     // now - born = 400 >= lifespan 400 → removed
     const alive = now - particle.born < particle.lifespan;
-    expect(alive).toBeFalse();
+    expect(alive).toBe(false);
+  });
+});
+
+// ─── GameEngine callbacks logic ──────────────────────────────────────────────
+
+// Simulates the callback invocation logic from the engine loop
+function simulateDestructions(
+  destroyedBatches: number[], // each element = number of targets destroyed in that batch
+  totalTargets: number,
+  callbacks: { onTargetDestroyed?: (count: number) => void; onAllDestroyed?: () => void }
+): { finalCount: number; stopped: boolean } {
+  let destroyedCount = 0;
+  let stopped = false;
+  let activeCallbacks: typeof callbacks | undefined = callbacks;
+
+  // Simulate a cache of totalTargets entries
+  const cache = Array.from({ length: totalTargets }, () => ({ destroyed: false }));
+  let cacheDestroyedSoFar = 0;
+
+  for (const batchSize of destroyedBatches) {
+    if (stopped) break;
+
+    // Mark batchSize entries as destroyed
+    for (let i = 0; i < batchSize && cacheDestroyedSoFar < totalTargets; i++) {
+      cache[cacheDestroyedSoFar].destroyed = true;
+      cacheDestroyedSoFar++;
+    }
+
+    destroyedCount += batchSize;
+    activeCallbacks?.onTargetDestroyed?.(destroyedCount);
+
+    const allGone = cache.every((e) => e.destroyed);
+    if (allGone) {
+      const onAllDestroyed = activeCallbacks?.onAllDestroyed;
+      // stop() clears callbacks
+      activeCallbacks = undefined;
+      stopped = true;
+      onAllDestroyed?.();
+    }
+  }
+
+  return { finalCount: destroyedCount, stopped };
+}
+
+// ─── GameEngine callbacks ────────────────────────────────────────────────────
+
+describe('GameEngine – onTargetDestroyed callback', () => {
+  it('is called with count=1 after first target is destroyed', () => {
+    const calls: number[] = [];
+    simulateDestructions([1], 3, { onTargetDestroyed: (c) => calls.push(c) });
+    expect(calls).toEqual([1]);
+  });
+
+  it('is called with incrementing count after each destruction', () => {
+    const calls: number[] = [];
+    simulateDestructions([1, 1, 1], 5, { onTargetDestroyed: (c) => calls.push(c) });
+    expect(calls).toEqual([1, 2, 3]);
+  });
+
+  it('increments by batch size when multiple targets destroyed at once', () => {
+    const calls: number[] = [];
+    simulateDestructions([2, 3], 10, { onTargetDestroyed: (c) => calls.push(c) });
+    expect(calls).toEqual([2, 5]);
+  });
+
+  it('is not called when no targets are destroyed', () => {
+    const calls: number[] = [];
+    simulateDestructions([], 3, { onTargetDestroyed: (c) => calls.push(c) });
+    expect(calls).toEqual([]);
+  });
+});
+
+describe('GameEngine – onAllDestroyed callback', () => {
+  it('is called exactly once when the last target is destroyed', () => {
+    let callCount = 0;
+    simulateDestructions([1, 1, 1], 3, { onAllDestroyed: () => callCount++ });
+    expect(callCount).toBe(1);
+  });
+
+  it('is not called when targets remain', () => {
+    let callCount = 0;
+    simulateDestructions([1, 1], 3, { onAllDestroyed: () => callCount++ });
+    expect(callCount).toBe(0);
+  });
+
+  it('is called when all targets destroyed in a single batch', () => {
+    let callCount = 0;
+    simulateDestructions([3], 3, { onAllDestroyed: () => callCount++ });
+    expect(callCount).toBe(1);
+  });
+});
+
+describe('GameEngine – callbacks cleared after stop()', () => {
+  it('onTargetDestroyed is not invoked after stop() is called', () => {
+    const calls: number[] = [];
+    const { stopped } = simulateDestructions([1, 1, 1], 2, {
+      onTargetDestroyed: (c) => calls.push(c),
+    });
+    // After both targets are destroyed, stop() runs and the 3rd batch is skipped
+    expect(stopped).toBe(true);
+    expect(calls).toEqual([1, 2]);
+  });
+
+  it('onAllDestroyed is not invoked again after stop() is called', () => {
+    let callCount = 0;
+    // The extra 3rd batch after stop must not re-fire the callback
+    simulateDestructions([1, 1, 1], 2, { onAllDestroyed: () => callCount++ });
+    expect(callCount).toBe(1);
+  });
+
+  it('callbacks are cleared (set to undefined) when stop() is called', () => {
+    // After allGone, the callback reference is captured, then callbacks are
+    // cleared before onAllDestroyed is invoked
+    const order: string[] = [];
+    simulateDestructions([1], 1, {
+      onTargetDestroyed: () => order.push('destroyed'),
+      onAllDestroyed: () => order.push('allDestroyed'),
+    });
+    expect(order).toEqual(['destroyed', 'allDestroyed']);
   });
 });

@@ -4,4 +4,6 @@ import { Injectable, signal } from '@angular/core';
 export class GameStateService {
   /** True while the rocket game is running. */
   readonly active = signal<boolean>(false);
+  /** True when the mobile Start Screen should be displayed. */
+  readonly showStartScreen = signal<boolean>(false);
 }

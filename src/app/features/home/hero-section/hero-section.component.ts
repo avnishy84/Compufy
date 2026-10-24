@@ -2,6 +2,7 @@ import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ButtonComponent } from '../../../shared/button/button.component';
 import { scrollReveal } from '../../../shared/animations/animations';
+import { GameStateService } from '../../rocket-game/game-state.service';
 
 @Component({
   selector: 'app-hero-section',
@@ -48,6 +49,16 @@ import { scrollReveal } from '../../../shared/animations/animations';
             <div class="face top"></div>
             <div class="face bottom"></div>
           </div>
+          <button
+            id="mobile-game-trigger"
+            type="button"
+            class="sm:hidden flex items-center gap-2 px-4 py-3 rounded-xl text-white text-sm font-medium"
+            style="min-width:44px;min-height:44px;background:rgba(99,102,241,0.25);border:1.5px solid rgba(99,102,241,0.5);"
+            aria-label="Play rocket game"
+            (click)="onMobileTriggerClick()"
+          >
+            🚀 <span>Play Game</span>
+          </button>
         </div>
       </div>
     </section>
@@ -82,8 +93,14 @@ import { scrollReveal } from '../../../shared/animations/animations';
 })
 export class HeroSectionComponent {
   private readonly router = inject(Router);
+  protected readonly gameState = inject(GameStateService);
 
   navigateToServices(): void {
     this.router.navigate(['/services']);
+  }
+
+  onMobileTriggerClick(): void {
+    this.gameState.showStartScreen.set(true);
+    this.gameState.active.set(true);
   }
 }
