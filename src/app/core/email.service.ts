@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import emailjs from '@emailjs/browser';
 import { environment } from '../../environments/environment';
 
@@ -18,14 +19,23 @@ export interface CareersEmailParams {
 
 @Injectable({ providedIn: 'root' })
 export class EmailService {
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly isBrowser = isPlatformBrowser(this.platformId);
+
   private readonly serviceId = environment.emailjs.serviceId;
   private readonly publicKey = environment.emailjs.publicKey;
 
   constructor() {
-    emailjs.init({ publicKey: this.publicKey });
+    if (this.isBrowser) {
+      emailjs.init({ publicKey: this.publicKey });
+    }
   }
 
   sendContactEmail(params: ContactEmailParams): Promise<void> {
+    if (!this.isBrowser) {
+      console.log('SSR: Skipping contact email send');
+      return Promise.resolve();
+    }
     return emailjs
       .send(
         this.serviceId,
@@ -42,6 +52,10 @@ export class EmailService {
   }
 
   async sendCareersEmail(params: CareersEmailParams): Promise<void> {
+    if (!this.isBrowser) {
+      console.log('SSR: Skipping careers email send');
+      return Promise.resolve();
+    }
     await emailjs.send(
       this.serviceId,
       environment.emailjs.careersTemplateId,

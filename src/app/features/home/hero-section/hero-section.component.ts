@@ -11,8 +11,7 @@ import { scrollReveal } from '../../../shared/animations/animations';
   animations: [scrollReveal],
   template: `
     <section
-      class="relative flex min-h-screen items-center justify-center overflow-hidden bg-surface px-6"
-      [@scrollReveal]
+      class="relative flex min-h-svh items-center justify-center overflow-hidden bg-surface px-6"
     >
       <!-- Background gradient -->
       <div class="pointer-events-none absolute inset-0">
@@ -20,26 +19,28 @@ import { scrollReveal } from '../../../shared/animations/animations';
         <div class="absolute right-1/4 bottom-1/4 h-96 w-96 translate-x-1/2 translate-y-1/2 rounded-full bg-brand-secondary/10 blur-3xl"></div>
       </div>
 
-      <div class="relative z-10 flex flex-col items-center gap-8 text-center lg:flex-row lg:text-left lg:gap-16">
-        <!-- Text content -->
+      <div class="relative z-10 flex flex-col items-center gap-20 text-center lg:flex-row lg:text-left lg:gap-16">
+        <!-- Text content: h1 renders immediately, sub-content animates in -->
         <div class="max-w-2xl">
-          <h1 class="mb-4 text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+          <h1 class="target mb-4 text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
             Powering the Future with
             <span class="bg-gradient-to-r from-brand-primary to-brand-accent bg-clip-text text-transparent">
               Smart Technology
             </span>
           </h1>
-          <p class="mb-8 text-lg text-slate-400 sm:text-xl">
-            Compufy Technology delivers cutting-edge web development, digital solutions, and professional IT consulting to help your business thrive in the digital age.
-          </p>
-          <app-button variant="primary" size="lg" (click)="navigateToServices()">
-            Explore Our Services
-          </app-button>
+          <div [@scrollReveal]>
+            <p class="mb-8 text-lg text-slate-400 sm:text-xl">
+              Compufy Technology delivers cutting-edge web development, digital solutions, and professional IT consulting to help your business thrive in the digital age.
+            </p>
+            <app-button variant="primary" size="lg" (click)="navigateToServices()">
+              Explore Our Services
+            </app-button>
+          </div>
         </div>
 
-        <!-- CSS 3D tech element -->
-        <div class="relative shrink-0" aria-hidden="true">
-          <div class="tech-cube">
+        <!-- CSS 3D tech element + game trigger -->
+        <div class="relative shrink-0 flex flex-col items-center gap-4" [@scrollReveal]>
+          <div class="tech-cube" aria-hidden="true">
             <div class="face front"></div>
             <div class="face back"></div>
             <div class="face left"></div>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://compufytech.web.app/sitemap.xml

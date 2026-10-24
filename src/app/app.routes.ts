@@ -52,7 +52,30 @@ export const routes: Routes = [
       import('./features/terms-of-service/terms-of-service.component').then(m => m.TermsOfServiceComponent),
   },
   {
+    path: 'case-studies/:slug',
+    loadComponent: () =>
+      import('./features/case-studies/case-study-detail/case-study-detail.component').then(
+        m => m.CaseStudyDetailComponent
+      ),
+  },
+  {
+    path: 'clients/:slug',
+    loadComponent: () =>
+      import('./features/clients/client-project-detail/client-project-detail.component').then(m => m.ClientProjectDetailComponent),
+  },
+  {
+    path: 'demo-unavailable',
+    loadComponent: () =>
+      import('./features/demo-unavailable/demo-unavailable.component').then(m => m.DemoUnavailableComponent),
+  },
+  {
+    path: '404-game',
+    loadComponent: () =>
+      import('./features/not-found/not-found.component').then(m => m.NotFoundComponent),
+  },
+  {
     path: '**',
-    redirectTo: '',
+    loadComponent: () =>
+      import('./features/not-found/not-found.component').then(m => m.NotFoundComponent),
   },
 ];
